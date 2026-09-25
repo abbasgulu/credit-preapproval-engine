@@ -17,9 +17,7 @@
 
 WHENEVER SQLERROR EXIT FAILURE
 SET VERIFY OFF
-ACCEPT hc_password CHAR PROMPT 'HC password: ' HIDE
-CONNECT hc/"&hc_password"@localhost:1521/XEPDB1
-UNDEFINE hc_password
+@sql\_connect.sql
 
 SET LINESIZE 150
 SET PAGESIZE 100

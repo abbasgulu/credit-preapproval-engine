@@ -8,6 +8,12 @@ data/*
 .env
 config/.env
 
+# Oracle Wallet files (the wallet itself lives outside the repo; this is a safeguard)
+*.p12
+*.sso
+*.lck
+oracle_wallet/
+
 # Python
 __pycache__/
 *.py[cod]

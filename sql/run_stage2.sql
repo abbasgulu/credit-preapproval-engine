@@ -15,9 +15,7 @@ SET VERIFY OFF
 SET LINESIZE 150
 SET PAGESIZE 100
 
-ACCEPT hc_password CHAR PROMPT 'HC password: ' HIDE
-CONNECT hc/"&hc_password"@localhost:1521/XEPDB1
-UNDEFINE hc_password
+@sql\_connect.sql
 
 VARIABLE run_start VARCHAR2(30)
 EXEC :run_start := TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')

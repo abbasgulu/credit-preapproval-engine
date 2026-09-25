@@ -54,14 +54,16 @@ All commands are run from the repository root in Windows `cmd`.
    `sqlplus / as sysdba @sql\00_setup\02_grant_and_test.sql`
 4. Point Oracle at the data folder (once):
    `sqlplus / as sysdba @sql\00_setup\03_create_directory.sql "%CD%\data\raw"`
-5. Stage 1 — external tables, raw tables and load:
-   `sqlplus /nolog @sql\run_stage1.sql` (asks for the HC password)
-6. Check the raw layer at any time:
+5. Store the HC password in an Oracle Wallet (once), so no script asks for
+   or contains a password: [docs/setup_wallet.md](docs/setup_wallet.md)
+6. Stage 1 — external tables, raw tables and load:
+   `sqlplus /nolog @sql\run_stage1.sql`
+7. Check the raw layer at any time:
    `sqlplus /nolog @sql\99_checks\01_raw_overview.sql`
-7. Stage 2 — feature tables with data-quality checks, then the data dictionary:
+8. Stage 2 — feature tables with data-quality checks, then the data dictionary:
    `sqlplus /nolog @sql\run_stage2.sql`
    (results of every check are stored in the `dq_log` table)
-8. Regenerate only [docs/data_dictionary.md](docs/data_dictionary.md):
+9. Regenerate only [docs/data_dictionary.md](docs/data_dictionary.md):
    `sqlplus /nolog @sql\run_data_dictionary.sql`
 
 ## Licence

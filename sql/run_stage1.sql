@@ -6,9 +6,8 @@
 -- Run from the repository root:
 --   sqlplus /nolog @sql\run_stage1.sql
 --
--- The script asks for the HC password and connects itself. (Do not use
--- sqlplus hc@localhost:1521/XEPDB1 - SQL*Plus reads the text after '/'
--- as the password.)
+-- The script connects itself through sql\_connect.sql (Oracle Wallet,
+-- no password prompt - see docs/setup_wallet.md).
 --
 -- Before the first run, as SYSDBA: sql\00_setup\03_create_directory.sql
 -- =====================================================================
@@ -18,9 +17,7 @@ SET VERIFY OFF
 SET LINESIZE 150
 SET PAGESIZE 100
 
-ACCEPT hc_password CHAR PROMPT 'HC password: ' HIDE
-CONNECT hc/"&hc_password"@localhost:1521/XEPDB1
-UNDEFINE hc_password
+@sql\_connect.sql
 
 -- Remember when this run started, to check only this run's loads at the end
 VARIABLE run_start VARCHAR2(30)
