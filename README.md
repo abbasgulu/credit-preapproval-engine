@@ -88,6 +88,8 @@ All commands are run from the repository root in Windows `cmd`.
    `sqlplus /nolog @sql\run_data_dictionary.sql`
 10. Stage 3 — check that Python reaches Oracle:
    `python python\scripts\check_db.py`
+11. Stage 3 — SQL steps (so far: the fit / valid / holdout split):
+   `sqlplus /nolog @sql\run_stage3.sql`
 
 ## Licence
 

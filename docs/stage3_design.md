@@ -63,8 +63,9 @@ check score stability (below).
 
 The split is made **in Oracle**, not in Python, with a hash of the client ID
 (`ORA_HASH`): the same client always lands in the same part, on any machine,
-with no random seed to remember. It is stored as a column `split` next to the
-features, so SQL, Python, Dataiku and Tableau all use exactly the same split.
+with no random seed to remember. It is exposed as a column `split` in the
+view `v_model_input` (all features + split), so SQL, Python, Dataiku and
+Tableau all use exactly the same split.
 A DQ check confirms the sizes and that the default rate is similar in all
 three parts.
 
@@ -143,7 +144,7 @@ be checked.
 
 | Output | Where |
 |---|---|
-| Split column | `sql/03_features/08_model_split.sql` |
+| Split (`v_model_input`) | `sql/03_features/08_model_split.sql`, run by `sql/run_stage3.sql` |
 | Calibration table + function | `sql/04_reference/01_ref_calibration.sql` |
 | Score table | `sql/01_ddl/04_model_scores.sql` |
 | Reusable Python | `python/hcr/db.py` (connection), `woe.py`, `metrics.py` |
