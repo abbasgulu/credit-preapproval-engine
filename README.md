@@ -13,7 +13,7 @@ Kaggle):
 
 1. **Collect** what is known about each applicant: loans at other lenders,
    earlier applications, how past loans were repaid.
-2. **Summarise** it into one row per person — 84 facts such as "share of
+2. **Summarise** it into one row per person — 85 facts such as "share of
    payments made late in the last year".
 3. **Estimate** the chance that the person will have trouble repaying.
 4. **Decide**: pre-approved or not, up to what limit, and the main reason.
@@ -22,7 +22,7 @@ Every step is checked automatically and every choice is written down, so
 anyone can follow why the result is what it is. Unfamiliar words are
 explained in the [glossary](docs/glossary.md).
 
-> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 87-column feature table (one row per client) built and verified by 35 automated data-quality checks. Next: model.
+> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 (model) in progress.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through

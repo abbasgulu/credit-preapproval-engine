@@ -34,6 +34,7 @@ SELECT
   fa.app_credit_to_income,
   fa.app_annuity_to_income,
   fa.app_credit_to_goods,
+  fa.app_credit_term,
   fa.app_ext_source_1,
   fa.app_ext_source_2,
   fa.app_ext_source_3,
@@ -132,6 +133,7 @@ COMMENT ON COLUMN feat_customer.app_goods_price_amt IS 'Price of the goods finan
 COMMENT ON COLUMN feat_customer.app_credit_to_income IS 'Credit amount / income.';
 COMMENT ON COLUMN feat_customer.app_annuity_to_income IS 'AMT_ANNUITY / AMT_INCOME_TOTAL as given. Kaggle does not document the period of either amount, so this is a relative burden measure, not a monthly PTI.';
 COMMENT ON COLUMN feat_customer.app_credit_to_goods IS 'Credit amount / goods price. Above 1 = credit larger than the goods price.';
+COMMENT ON COLUMN feat_customer.app_credit_term IS 'Credit amount / annuity: how many annuity payments repay the credit, i.e. the loan''s effective term (decision 22). Kaggle does not state the payment period.';
 COMMENT ON COLUMN feat_customer.app_ext_source_1 IS 'Normalised external score 1 (Kaggle, source undisclosed).';
 COMMENT ON COLUMN feat_customer.app_ext_source_2 IS 'Normalised external score 2 (Kaggle, source undisclosed).';
 COMMENT ON COLUMN feat_customer.app_ext_source_3 IS 'Normalised external score 3 (Kaggle, source undisclosed).';

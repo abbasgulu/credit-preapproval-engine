@@ -13,10 +13,10 @@ with the [scorecard](scorecard.md) on the same clients neither model learned fro
 
 | Model | Gini on `fit` | Gini on `valid` |
 |---|---:|---:|
-| Scorecard | 0.502 | 0.490 |
-| LightGBM (1196 trees) | 0.659 | 0.558 |
+| Scorecard | 0.503 | 0.490 |
+| LightGBM (1113 trees) | 0.659 | 0.564 |
 
-Gain on `valid`: **+0.068**. The scorecard is preferred unless LightGBM gains
+Gain on `valid`: **+0.073**. The scorecard is preferred unless LightGBM gains
 at least 0.02 ([decision 16](decisions.md)); the final comparison uses the
 untouched `holdout` clients (Stage 3f).
 
@@ -31,14 +31,14 @@ advance; the number of trees is where the cross-validated result stopped improvi
 
 | num_leaves | min_child_samples | Trees | CV Gini |
 |---:|---:|---:|---:|
-| 15 | 100 | 1132 | 0.556 (± 0.007) |
-| 15 | 400 | 1196 | 0.558 (± 0.007) ← chosen |
-| 31 | 100 | 889 | 0.555 (± 0.007) |
-| 31 | 400 | 704 | 0.557 (± 0.007) |
-| 63 | 100 | 420 | 0.555 (± 0.007) |
-| 63 | 400 | 487 | 0.556 (± 0.007) |
+| 15 | 100 | 1562 | 0.562 (± 0.005) |
+| 15 | 400 | 1113 | 0.563 (± 0.005) ← chosen |
+| 31 | 100 | 783 | 0.561 (± 0.005) |
+| 31 | 400 | 558 | 0.563 (± 0.005) |
+| 63 | 100 | 407 | 0.559 (± 0.005) |
+| 63 | 400 | 436 | 0.561 (± 0.004) |
 
-Chosen: 1196 trees, 288 seconds in total. Other settings are fixed and
+Chosen: 1113 trees, 272 seconds in total. Other settings are fixed and
 listed in `models/lightgbm.json`. Age is not a feature ([decision 21](decisions.md)).
 
 ## What drives the predictions
@@ -50,23 +50,23 @@ fact pushed the prediction up or down; the chart shows each fact's share of the 
 
 | Fact | Share |
 |---|---:|
-| `app_ext_source_mean` | 13.6% |
-| `app_employed_years` | 4.9% |
-| `pos_instalments_left_sum` | 4.1% |
-| `app_credit_to_goods` | 3.6% |
-| `prv_granted_to_asked_avg` | 3.5% |
-| `app_annuity_amt` | 3.5% |
-| `app_education` | 3.4% |
-| `app_ext_source_1` | 3.3% |
-| `prv_approved_credit_sum` | 3.1% |
-| `app_ext_source_3` | 3.0% |
-| `bur_closed_cnt` | 2.9% |
+| `app_ext_source_mean` | 14.0% |
+| `app_employed_years` | 4.8% |
+| `app_credit_term` | 4.2% |
+| `pos_instalments_left_sum` | 3.9% |
+| `app_ext_source_1` | 3.4% |
+| `prv_granted_to_asked_avg` | 3.3% |
+| `app_education` | 3.3% |
+| `app_credit_to_goods` | 3.3% |
+| `app_annuity_amt` | 3.2% |
+| `bur_closed_cnt` | 2.7% |
+| `prv_approved_credit_sum` | 2.7% |
+| `app_ext_source_3` | 2.6% |
 | `bur_last_credit_days_ago` | 2.6% |
-| `app_goods_price_amt` | 2.5% |
 | `ins_cnt_12m` | 2.3% |
-| `app_ext_source_2` | 2.2% |
-| `app_family_status` | 2.1% |
+| `app_family_status` | 2.2% |
+| `app_ext_source_2` | 2.0% |
 | `cc_util_max_12m` | 1.9% |
-| `ins_late_share_12m` | 1.9% |
 | `ins_late_share_all` | 1.8% |
-| `app_documents_cnt` | 1.8% |
+| `bur_debt_to_income` | 1.8% |
+| `ins_late_share_12m` | 1.8% |

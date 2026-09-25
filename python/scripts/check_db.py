@@ -54,7 +54,7 @@ def main() -> None:
     print(f"Read time     : {seconds:.1f} s")
     print(f"Memory        : {memory_mb:,.0f} MB")
 
-    expected = (356_255, 87)   # 87 columns: sk_id_curr, dataset, target + 84 features
+    expected = (356_255, 88)   # 88 columns: sk_id_curr, dataset, target + 85 features
     ok = df.shape == expected and df["sk_id_curr"].is_unique
     print(f"\nCheck         : shape {df.shape} = {expected} and sk_id_curr unique -> {'OK' if ok else 'FAILED'}")
     print("\n===== 3a " + ("COMPLETE" if ok else "FAILED") + " =====")

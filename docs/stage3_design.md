@@ -1,6 +1,6 @@
 # Stage 3 design — the risk model
 
-Approved 2026-09-25. Turns the 87 features of `feat_customer` (Stage 2) into a
+Approved 2026-09-25. Turns the 85 features of `feat_customer` (Stage 2) into a
 **probability of default** for every client — the input of the decision
 engine (Stage 4).
 
@@ -26,7 +26,7 @@ The better one — judged on unseen clients — feeds the decision engine.
 ## 1. Data flow
 
 ```
-Oracle: feat_customer (356,255 clients, 87 features)
+Oracle: feat_customer (356,255 clients, 85 features)
    │  python-oracledb (password from Windows Credential Manager)
    ▼
 Python: train the scorecard and LightGBM, compare, calibrate

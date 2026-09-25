@@ -34,6 +34,7 @@ WITH agg AS (
     amt_credit  / NULLIF(amt_income_total, 0)            AS app_credit_to_income,
     amt_annuity / NULLIF(amt_income_total, 0)            AS app_annuity_to_income,
     amt_credit  / NULLIF(amt_goods_price, 0)             AS app_credit_to_goods,
+    amt_credit  / NULLIF(amt_annuity, 0)                 AS app_credit_term,
     ext_source_1                                         AS app_ext_source_1,
     ext_source_2                                         AS app_ext_source_2,
     ext_source_3                                         AS app_ext_source_3,
@@ -67,6 +68,7 @@ SELECT
   a.app_credit_to_income,
   a.app_annuity_to_income,
   a.app_credit_to_goods,
+  a.app_credit_term,
   a.app_ext_source_1,
   a.app_ext_source_2,
   a.app_ext_source_3,
@@ -98,6 +100,7 @@ COMMENT ON COLUMN feat_application.app_goods_price_amt IS 'Price of the goods fi
 COMMENT ON COLUMN feat_application.app_credit_to_income IS 'Credit amount / income.';
 COMMENT ON COLUMN feat_application.app_annuity_to_income IS 'AMT_ANNUITY / AMT_INCOME_TOTAL as given. Kaggle does not document the period of either amount, so this is a relative burden measure, not a monthly PTI.';
 COMMENT ON COLUMN feat_application.app_credit_to_goods IS 'Credit amount / goods price. Above 1 = credit larger than the goods price.';
+COMMENT ON COLUMN feat_application.app_credit_term IS 'Credit amount / annuity: how many annuity payments repay the credit, i.e. the loan''s effective term (decision 22). Kaggle does not state the payment period.';
 COMMENT ON COLUMN feat_application.app_ext_source_1 IS 'Normalised external score 1 (Kaggle, source undisclosed).';
 COMMENT ON COLUMN feat_application.app_ext_source_2 IS 'Normalised external score 2 (Kaggle, source undisclosed).';
 COMMENT ON COLUMN feat_application.app_ext_source_3 IS 'Normalised external score 3 (Kaggle, source undisclosed).';
@@ -114,6 +117,7 @@ EXEC p_dq_rowcount('FEAT_APPLICATION', 356255)
 EXEC p_dq_range('FEAT_APPLICATION', 'APP_AGE_YEARS', 18, 100)
 EXEC p_dq_range('FEAT_APPLICATION', 'APP_IS_NOT_EMPLOYED', 0, 1)
 EXEC p_dq_range('FEAT_APPLICATION', 'APP_EXT_SOURCE_MEAN', 0, 1)
+EXEC p_dq_range('FEAT_APPLICATION', 'APP_CREDIT_TERM', 1, 1000)
 EXEC p_dq('FEAT_APPLICATION', 'not-employed flag = 365243 count (train+test)', 'SELECT COUNT(*) FROM feat_application WHERE app_is_not_employed = 1', 64648)
 
 PROMPT feat_application: done
