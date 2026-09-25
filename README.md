@@ -4,7 +4,7 @@ An end-to-end credit pre-approval pipeline built on public data: from raw bureau
 transaction history to a calibrated probability of default, a credit limit and a
 reason for every decision.
 
-> **Status:** 🚧 In progress — Stage 1 complete (58.5M rows loaded and verified). Next: feature tables.
+> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 87-column feature table (one row per client) built and verified by 35 automated data-quality checks. Next: model.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through
@@ -58,6 +58,11 @@ All commands are run from the repository root in Windows `cmd`.
    `sqlplus /nolog @sql\run_stage1.sql` (asks for the HC password)
 6. Check the raw layer at any time:
    `sqlplus /nolog @sql\99_checks\01_raw_overview.sql`
+7. Stage 2 — feature tables with data-quality checks, then the data dictionary:
+   `sqlplus /nolog @sql\run_stage2.sql`
+   (results of every check are stored in the `dq_log` table)
+8. Regenerate only [docs/data_dictionary.md](docs/data_dictionary.md):
+   `sqlplus /nolog @sql\run_data_dictionary.sql`
 
 ## Licence
 
