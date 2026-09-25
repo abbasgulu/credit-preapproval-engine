@@ -90,6 +90,9 @@ All commands are run from the repository root in Windows `cmd`.
    `python python\scripts\check_db.py`
 11. Stage 3 — SQL steps (so far: the fit / valid / holdout split):
    `sqlplus /nolog @sql\run_stage3.sql`
+12. Stage 3 — first look at the data (charts in `docs\img`, findings in
+   [docs/exploration.md](docs/exploration.md)):
+   `python python\scripts\explore.py`
 
 ## Licence
 
