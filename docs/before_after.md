@@ -1,0 +1,17 @@
+# Before / after: ten engineering improvements
+
+Common problems in legacy credit-risk pipelines and how this project handles them.
+Each row will link to the script and the evidence once it is implemented.
+
+| # | Common problem | Approach in this project | Stage | Status |
+|---|---|---|---|---|
+| 1 | Exclusion lists (fraud, VIP, …) hard-coded inside procedures; changing them requires recompiling | `ref_exclusion_list` table — the code reads the table, the list is edited as data | 4 | Planned |
+| 2 | The same calibration formula copied in many places | One PL/SQL function `f_calibrate_pd` + coefficients in `ref_calibration` | 3 | Planned |
+| 3 | Limit matrix written as a long `CASE`, with gaps at band boundaries | `ref_limit_grid` table + a check query that finds gaps and overlaps automatically | 4 | Planned |
+| 4 | Thresholds (minimum amount, age, cut-off, income multiple) scattered through code | `ref_rules` table with validity dates — the decision engine reads rules from data | 4 | Planned |
+| 5 | Snapshot tables truncated every day — no history | Snapshots kept by `load_date`; trends and day-over-day comparison come for free | 2 | Planned |
+| 6 | Row duplication passes silently | Automatic data-quality checks after each step, logged to `dq_log`; failure stops the run | 2 | Planned |
+| 7 | Commented-out blocks and tables filled by unknown processes | Each step is one numbered script and one Dataiku recipe; no orphan datasets | 5 | Planned |
+| 8 | Misleading column names | Naming convention + `COMMENT ON` → generated data dictionary | 2 | Planned |
+| 9 | Reject reasons reconstructed after the decision in reporting code | `decision_reason` written at decision time; reports only read it | 4 | Planned |
+| 10 | Logic split across two engines, unclear which is authoritative | Logic lives in SQL; Dataiku orchestrates only; a reconciliation check proves both match | 5 | Planned |

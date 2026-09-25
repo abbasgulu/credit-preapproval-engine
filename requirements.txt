@@ -1,0 +1,12 @@
+# Python dependencies.
+# Exact versions will be pinned (pip freeze) once the environment is final.
+pandas
+numpy
+oracledb
+python-dotenv
+scikit-learn
+lightgbm
+shap
+matplotlib
+seaborn
+jupyter

@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------
+# Data — never committed. Download from Kaggle (see data/README.md)
+# ---------------------------------------------------------------
+data/*
+!data/README.md
+
+# Local secrets (connection settings, passwords)
+.env
+config/.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# OS / editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
