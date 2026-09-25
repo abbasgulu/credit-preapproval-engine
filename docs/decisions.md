@@ -10,3 +10,5 @@ One line per decision: what was decided and why. Newest at the bottom.
 | 4 | 2026-09-25 | GitHub is the single source of truth | Tableau Public, Kaggle and LinkedIn receive copies from the repo and link back to it |
 | 5 | 2026-09-25 | Raw data is not committed | GitHub file size limit and Kaggle licence; `data/README.md` explains how to download it |
 | 6 | 2026-09-25 | Repository language: English | Readable by international reviewers and the Kaggle/GitHub community |
+| 7 | 2026-09-25 | Load CSVs through Oracle external tables (`ext_*` → `raw_*`) | Pure SQL, no extra tools; the CSV can be queried before loading; type conversion is explicit and fails loudly |
+| 8 | 2026-09-25 | External tables use an explicit record delimiter per file (`0x'0A'` or `0x'0D0A'`) | Oracle 18c has no `DETECTED NEWLINE`; line endings were measured: the Kaggle data files use LF, the column description file uses CRLF |

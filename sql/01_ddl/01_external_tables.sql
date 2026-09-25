@@ -1,0 +1,563 @@
+-- =====================================================================
+-- 01_external_tables.sql
+-- External tables: a read-only SQL window onto each CSV file.
+-- The data stays in the CSV; Oracle reads it on every SELECT.
+--
+-- All columns are VARCHAR2 here on purpose: type conversion happens in
+-- 02_load/01_load_raw.sql, where a bad value stops the load loudly.
+--
+-- REJECT LIMIT 0: a single unreadable row raises an error instead of being
+-- silently written to the .bad file.
+-- =====================================================================
+
+WHENEVER SQLERROR EXIT FAILURE
+
+-- HomeCredit_columns_description.csv  (219 rows, CRLF, measured)
+EXEC p_drop_if_exists('EXT_COLUMN_DESCRIPTION')
+CREATE TABLE ext_column_description (
+  ID                             VARCHAR2(200),
+  TABLE_NAME                     VARCHAR2(200),
+  COLUMN_NAME                    VARCHAR2(200),
+  DESCRIPTION                    VARCHAR2(4000),
+  SPECIAL                        VARCHAR2(1000)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0D0A'
+    CHARACTERSET WE8ISO8859P1
+    SKIP 1
+    BADFILE hc_raw:'ext_column_description.bad'
+    LOGFILE hc_raw:'ext_column_description.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+    (
+      ID                           CHAR(20),
+      TABLE_NAME                   CHAR(200),
+      COLUMN_NAME                  CHAR(200),
+      DESCRIPTION                  CHAR(4000),
+      SPECIAL                      CHAR(1000)
+    )
+  )
+  LOCATION ('HomeCredit_columns_description.csv')
+)
+REJECT LIMIT 0;
+
+-- application_train.csv  (307,511 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_APPLICATION_TRAIN')
+CREATE TABLE ext_application_train (
+  SK_ID_CURR                     VARCHAR2(255),
+  TARGET                         VARCHAR2(255),
+  NAME_CONTRACT_TYPE             VARCHAR2(255),
+  CODE_GENDER                    VARCHAR2(255),
+  FLAG_OWN_CAR                   VARCHAR2(255),
+  FLAG_OWN_REALTY                VARCHAR2(255),
+  CNT_CHILDREN                   VARCHAR2(255),
+  AMT_INCOME_TOTAL               VARCHAR2(255),
+  AMT_CREDIT                     VARCHAR2(255),
+  AMT_ANNUITY                    VARCHAR2(255),
+  AMT_GOODS_PRICE                VARCHAR2(255),
+  NAME_TYPE_SUITE                VARCHAR2(255),
+  NAME_INCOME_TYPE               VARCHAR2(255),
+  NAME_EDUCATION_TYPE            VARCHAR2(255),
+  NAME_FAMILY_STATUS             VARCHAR2(255),
+  NAME_HOUSING_TYPE              VARCHAR2(255),
+  REGION_POPULATION_RELATIVE     VARCHAR2(255),
+  DAYS_BIRTH                     VARCHAR2(255),
+  DAYS_EMPLOYED                  VARCHAR2(255),
+  DAYS_REGISTRATION              VARCHAR2(255),
+  DAYS_ID_PUBLISH                VARCHAR2(255),
+  OWN_CAR_AGE                    VARCHAR2(255),
+  FLAG_MOBIL                     VARCHAR2(255),
+  FLAG_EMP_PHONE                 VARCHAR2(255),
+  FLAG_WORK_PHONE                VARCHAR2(255),
+  FLAG_CONT_MOBILE               VARCHAR2(255),
+  FLAG_PHONE                     VARCHAR2(255),
+  FLAG_EMAIL                     VARCHAR2(255),
+  OCCUPATION_TYPE                VARCHAR2(255),
+  CNT_FAM_MEMBERS                VARCHAR2(255),
+  REGION_RATING_CLIENT           VARCHAR2(255),
+  REGION_RATING_CLIENT_W_CITY    VARCHAR2(255),
+  WEEKDAY_APPR_PROCESS_START     VARCHAR2(255),
+  HOUR_APPR_PROCESS_START        VARCHAR2(255),
+  REG_REGION_NOT_LIVE_REGION     VARCHAR2(255),
+  REG_REGION_NOT_WORK_REGION     VARCHAR2(255),
+  LIVE_REGION_NOT_WORK_REGION    VARCHAR2(255),
+  REG_CITY_NOT_LIVE_CITY         VARCHAR2(255),
+  REG_CITY_NOT_WORK_CITY         VARCHAR2(255),
+  LIVE_CITY_NOT_WORK_CITY        VARCHAR2(255),
+  ORGANIZATION_TYPE              VARCHAR2(255),
+  EXT_SOURCE_1                   VARCHAR2(255),
+  EXT_SOURCE_2                   VARCHAR2(255),
+  EXT_SOURCE_3                   VARCHAR2(255),
+  APARTMENTS_AVG                 VARCHAR2(255),
+  BASEMENTAREA_AVG               VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_AVG    VARCHAR2(255),
+  YEARS_BUILD_AVG                VARCHAR2(255),
+  COMMONAREA_AVG                 VARCHAR2(255),
+  ELEVATORS_AVG                  VARCHAR2(255),
+  ENTRANCES_AVG                  VARCHAR2(255),
+  FLOORSMAX_AVG                  VARCHAR2(255),
+  FLOORSMIN_AVG                  VARCHAR2(255),
+  LANDAREA_AVG                   VARCHAR2(255),
+  LIVINGAPARTMENTS_AVG           VARCHAR2(255),
+  LIVINGAREA_AVG                 VARCHAR2(255),
+  NONLIVINGAPARTMENTS_AVG        VARCHAR2(255),
+  NONLIVINGAREA_AVG              VARCHAR2(255),
+  APARTMENTS_MODE                VARCHAR2(255),
+  BASEMENTAREA_MODE              VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_MODE   VARCHAR2(255),
+  YEARS_BUILD_MODE               VARCHAR2(255),
+  COMMONAREA_MODE                VARCHAR2(255),
+  ELEVATORS_MODE                 VARCHAR2(255),
+  ENTRANCES_MODE                 VARCHAR2(255),
+  FLOORSMAX_MODE                 VARCHAR2(255),
+  FLOORSMIN_MODE                 VARCHAR2(255),
+  LANDAREA_MODE                  VARCHAR2(255),
+  LIVINGAPARTMENTS_MODE          VARCHAR2(255),
+  LIVINGAREA_MODE                VARCHAR2(255),
+  NONLIVINGAPARTMENTS_MODE       VARCHAR2(255),
+  NONLIVINGAREA_MODE             VARCHAR2(255),
+  APARTMENTS_MEDI                VARCHAR2(255),
+  BASEMENTAREA_MEDI              VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_MEDI   VARCHAR2(255),
+  YEARS_BUILD_MEDI               VARCHAR2(255),
+  COMMONAREA_MEDI                VARCHAR2(255),
+  ELEVATORS_MEDI                 VARCHAR2(255),
+  ENTRANCES_MEDI                 VARCHAR2(255),
+  FLOORSMAX_MEDI                 VARCHAR2(255),
+  FLOORSMIN_MEDI                 VARCHAR2(255),
+  LANDAREA_MEDI                  VARCHAR2(255),
+  LIVINGAPARTMENTS_MEDI          VARCHAR2(255),
+  LIVINGAREA_MEDI                VARCHAR2(255),
+  NONLIVINGAPARTMENTS_MEDI       VARCHAR2(255),
+  NONLIVINGAREA_MEDI             VARCHAR2(255),
+  FONDKAPREMONT_MODE             VARCHAR2(255),
+  HOUSETYPE_MODE                 VARCHAR2(255),
+  TOTALAREA_MODE                 VARCHAR2(255),
+  WALLSMATERIAL_MODE             VARCHAR2(255),
+  EMERGENCYSTATE_MODE            VARCHAR2(255),
+  OBS_30_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DEF_30_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  OBS_60_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DEF_60_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DAYS_LAST_PHONE_CHANGE         VARCHAR2(255),
+  FLAG_DOCUMENT_2                VARCHAR2(255),
+  FLAG_DOCUMENT_3                VARCHAR2(255),
+  FLAG_DOCUMENT_4                VARCHAR2(255),
+  FLAG_DOCUMENT_5                VARCHAR2(255),
+  FLAG_DOCUMENT_6                VARCHAR2(255),
+  FLAG_DOCUMENT_7                VARCHAR2(255),
+  FLAG_DOCUMENT_8                VARCHAR2(255),
+  FLAG_DOCUMENT_9                VARCHAR2(255),
+  FLAG_DOCUMENT_10               VARCHAR2(255),
+  FLAG_DOCUMENT_11               VARCHAR2(255),
+  FLAG_DOCUMENT_12               VARCHAR2(255),
+  FLAG_DOCUMENT_13               VARCHAR2(255),
+  FLAG_DOCUMENT_14               VARCHAR2(255),
+  FLAG_DOCUMENT_15               VARCHAR2(255),
+  FLAG_DOCUMENT_16               VARCHAR2(255),
+  FLAG_DOCUMENT_17               VARCHAR2(255),
+  FLAG_DOCUMENT_18               VARCHAR2(255),
+  FLAG_DOCUMENT_19               VARCHAR2(255),
+  FLAG_DOCUMENT_20               VARCHAR2(255),
+  FLAG_DOCUMENT_21               VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_HOUR     VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_DAY      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_WEEK     VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_MON      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_QRT      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_YEAR     VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_application_train.bad'
+    LOGFILE hc_raw:'ext_application_train.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('application_train.csv')
+)
+REJECT LIMIT 0;
+
+-- application_test.csv  (48,744 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_APPLICATION_TEST')
+CREATE TABLE ext_application_test (
+  SK_ID_CURR                     VARCHAR2(255),
+  NAME_CONTRACT_TYPE             VARCHAR2(255),
+  CODE_GENDER                    VARCHAR2(255),
+  FLAG_OWN_CAR                   VARCHAR2(255),
+  FLAG_OWN_REALTY                VARCHAR2(255),
+  CNT_CHILDREN                   VARCHAR2(255),
+  AMT_INCOME_TOTAL               VARCHAR2(255),
+  AMT_CREDIT                     VARCHAR2(255),
+  AMT_ANNUITY                    VARCHAR2(255),
+  AMT_GOODS_PRICE                VARCHAR2(255),
+  NAME_TYPE_SUITE                VARCHAR2(255),
+  NAME_INCOME_TYPE               VARCHAR2(255),
+  NAME_EDUCATION_TYPE            VARCHAR2(255),
+  NAME_FAMILY_STATUS             VARCHAR2(255),
+  NAME_HOUSING_TYPE              VARCHAR2(255),
+  REGION_POPULATION_RELATIVE     VARCHAR2(255),
+  DAYS_BIRTH                     VARCHAR2(255),
+  DAYS_EMPLOYED                  VARCHAR2(255),
+  DAYS_REGISTRATION              VARCHAR2(255),
+  DAYS_ID_PUBLISH                VARCHAR2(255),
+  OWN_CAR_AGE                    VARCHAR2(255),
+  FLAG_MOBIL                     VARCHAR2(255),
+  FLAG_EMP_PHONE                 VARCHAR2(255),
+  FLAG_WORK_PHONE                VARCHAR2(255),
+  FLAG_CONT_MOBILE               VARCHAR2(255),
+  FLAG_PHONE                     VARCHAR2(255),
+  FLAG_EMAIL                     VARCHAR2(255),
+  OCCUPATION_TYPE                VARCHAR2(255),
+  CNT_FAM_MEMBERS                VARCHAR2(255),
+  REGION_RATING_CLIENT           VARCHAR2(255),
+  REGION_RATING_CLIENT_W_CITY    VARCHAR2(255),
+  WEEKDAY_APPR_PROCESS_START     VARCHAR2(255),
+  HOUR_APPR_PROCESS_START        VARCHAR2(255),
+  REG_REGION_NOT_LIVE_REGION     VARCHAR2(255),
+  REG_REGION_NOT_WORK_REGION     VARCHAR2(255),
+  LIVE_REGION_NOT_WORK_REGION    VARCHAR2(255),
+  REG_CITY_NOT_LIVE_CITY         VARCHAR2(255),
+  REG_CITY_NOT_WORK_CITY         VARCHAR2(255),
+  LIVE_CITY_NOT_WORK_CITY        VARCHAR2(255),
+  ORGANIZATION_TYPE              VARCHAR2(255),
+  EXT_SOURCE_1                   VARCHAR2(255),
+  EXT_SOURCE_2                   VARCHAR2(255),
+  EXT_SOURCE_3                   VARCHAR2(255),
+  APARTMENTS_AVG                 VARCHAR2(255),
+  BASEMENTAREA_AVG               VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_AVG    VARCHAR2(255),
+  YEARS_BUILD_AVG                VARCHAR2(255),
+  COMMONAREA_AVG                 VARCHAR2(255),
+  ELEVATORS_AVG                  VARCHAR2(255),
+  ENTRANCES_AVG                  VARCHAR2(255),
+  FLOORSMAX_AVG                  VARCHAR2(255),
+  FLOORSMIN_AVG                  VARCHAR2(255),
+  LANDAREA_AVG                   VARCHAR2(255),
+  LIVINGAPARTMENTS_AVG           VARCHAR2(255),
+  LIVINGAREA_AVG                 VARCHAR2(255),
+  NONLIVINGAPARTMENTS_AVG        VARCHAR2(255),
+  NONLIVINGAREA_AVG              VARCHAR2(255),
+  APARTMENTS_MODE                VARCHAR2(255),
+  BASEMENTAREA_MODE              VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_MODE   VARCHAR2(255),
+  YEARS_BUILD_MODE               VARCHAR2(255),
+  COMMONAREA_MODE                VARCHAR2(255),
+  ELEVATORS_MODE                 VARCHAR2(255),
+  ENTRANCES_MODE                 VARCHAR2(255),
+  FLOORSMAX_MODE                 VARCHAR2(255),
+  FLOORSMIN_MODE                 VARCHAR2(255),
+  LANDAREA_MODE                  VARCHAR2(255),
+  LIVINGAPARTMENTS_MODE          VARCHAR2(255),
+  LIVINGAREA_MODE                VARCHAR2(255),
+  NONLIVINGAPARTMENTS_MODE       VARCHAR2(255),
+  NONLIVINGAREA_MODE             VARCHAR2(255),
+  APARTMENTS_MEDI                VARCHAR2(255),
+  BASEMENTAREA_MEDI              VARCHAR2(255),
+  YEARS_BEGINEXPLUATATION_MEDI   VARCHAR2(255),
+  YEARS_BUILD_MEDI               VARCHAR2(255),
+  COMMONAREA_MEDI                VARCHAR2(255),
+  ELEVATORS_MEDI                 VARCHAR2(255),
+  ENTRANCES_MEDI                 VARCHAR2(255),
+  FLOORSMAX_MEDI                 VARCHAR2(255),
+  FLOORSMIN_MEDI                 VARCHAR2(255),
+  LANDAREA_MEDI                  VARCHAR2(255),
+  LIVINGAPARTMENTS_MEDI          VARCHAR2(255),
+  LIVINGAREA_MEDI                VARCHAR2(255),
+  NONLIVINGAPARTMENTS_MEDI       VARCHAR2(255),
+  NONLIVINGAREA_MEDI             VARCHAR2(255),
+  FONDKAPREMONT_MODE             VARCHAR2(255),
+  HOUSETYPE_MODE                 VARCHAR2(255),
+  TOTALAREA_MODE                 VARCHAR2(255),
+  WALLSMATERIAL_MODE             VARCHAR2(255),
+  EMERGENCYSTATE_MODE            VARCHAR2(255),
+  OBS_30_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DEF_30_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  OBS_60_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DEF_60_CNT_SOCIAL_CIRCLE       VARCHAR2(255),
+  DAYS_LAST_PHONE_CHANGE         VARCHAR2(255),
+  FLAG_DOCUMENT_2                VARCHAR2(255),
+  FLAG_DOCUMENT_3                VARCHAR2(255),
+  FLAG_DOCUMENT_4                VARCHAR2(255),
+  FLAG_DOCUMENT_5                VARCHAR2(255),
+  FLAG_DOCUMENT_6                VARCHAR2(255),
+  FLAG_DOCUMENT_7                VARCHAR2(255),
+  FLAG_DOCUMENT_8                VARCHAR2(255),
+  FLAG_DOCUMENT_9                VARCHAR2(255),
+  FLAG_DOCUMENT_10               VARCHAR2(255),
+  FLAG_DOCUMENT_11               VARCHAR2(255),
+  FLAG_DOCUMENT_12               VARCHAR2(255),
+  FLAG_DOCUMENT_13               VARCHAR2(255),
+  FLAG_DOCUMENT_14               VARCHAR2(255),
+  FLAG_DOCUMENT_15               VARCHAR2(255),
+  FLAG_DOCUMENT_16               VARCHAR2(255),
+  FLAG_DOCUMENT_17               VARCHAR2(255),
+  FLAG_DOCUMENT_18               VARCHAR2(255),
+  FLAG_DOCUMENT_19               VARCHAR2(255),
+  FLAG_DOCUMENT_20               VARCHAR2(255),
+  FLAG_DOCUMENT_21               VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_HOUR     VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_DAY      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_WEEK     VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_MON      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_QRT      VARCHAR2(255),
+  AMT_REQ_CREDIT_BUREAU_YEAR     VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_application_test.bad'
+    LOGFILE hc_raw:'ext_application_test.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('application_test.csv')
+)
+REJECT LIMIT 0;
+
+-- bureau.csv  (1,716,428 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_BUREAU')
+CREATE TABLE ext_bureau (
+  SK_ID_CURR                     VARCHAR2(255),
+  SK_ID_BUREAU                   VARCHAR2(255),
+  CREDIT_ACTIVE                  VARCHAR2(255),
+  CREDIT_CURRENCY                VARCHAR2(255),
+  DAYS_CREDIT                    VARCHAR2(255),
+  CREDIT_DAY_OVERDUE             VARCHAR2(255),
+  DAYS_CREDIT_ENDDATE            VARCHAR2(255),
+  DAYS_ENDDATE_FACT              VARCHAR2(255),
+  AMT_CREDIT_MAX_OVERDUE         VARCHAR2(255),
+  CNT_CREDIT_PROLONG             VARCHAR2(255),
+  AMT_CREDIT_SUM                 VARCHAR2(255),
+  AMT_CREDIT_SUM_DEBT            VARCHAR2(255),
+  AMT_CREDIT_SUM_LIMIT           VARCHAR2(255),
+  AMT_CREDIT_SUM_OVERDUE         VARCHAR2(255),
+  CREDIT_TYPE                    VARCHAR2(255),
+  DAYS_CREDIT_UPDATE             VARCHAR2(255),
+  AMT_ANNUITY                    VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_bureau.bad'
+    LOGFILE hc_raw:'ext_bureau.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('bureau.csv')
+)
+REJECT LIMIT 0;
+
+-- previous_application.csv  (1,670,214 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_PREVIOUS_APPLICATION')
+CREATE TABLE ext_previous_application (
+  SK_ID_PREV                     VARCHAR2(255),
+  SK_ID_CURR                     VARCHAR2(255),
+  NAME_CONTRACT_TYPE             VARCHAR2(255),
+  AMT_ANNUITY                    VARCHAR2(255),
+  AMT_APPLICATION                VARCHAR2(255),
+  AMT_CREDIT                     VARCHAR2(255),
+  AMT_DOWN_PAYMENT               VARCHAR2(255),
+  AMT_GOODS_PRICE                VARCHAR2(255),
+  WEEKDAY_APPR_PROCESS_START     VARCHAR2(255),
+  HOUR_APPR_PROCESS_START        VARCHAR2(255),
+  FLAG_LAST_APPL_PER_CONTRACT    VARCHAR2(255),
+  NFLAG_LAST_APPL_IN_DAY         VARCHAR2(255),
+  RATE_DOWN_PAYMENT              VARCHAR2(255),
+  RATE_INTEREST_PRIMARY          VARCHAR2(255),
+  RATE_INTEREST_PRIVILEGED       VARCHAR2(255),
+  NAME_CASH_LOAN_PURPOSE         VARCHAR2(255),
+  NAME_CONTRACT_STATUS           VARCHAR2(255),
+  DAYS_DECISION                  VARCHAR2(255),
+  NAME_PAYMENT_TYPE              VARCHAR2(255),
+  CODE_REJECT_REASON             VARCHAR2(255),
+  NAME_TYPE_SUITE                VARCHAR2(255),
+  NAME_CLIENT_TYPE               VARCHAR2(255),
+  NAME_GOODS_CATEGORY            VARCHAR2(255),
+  NAME_PORTFOLIO                 VARCHAR2(255),
+  NAME_PRODUCT_TYPE              VARCHAR2(255),
+  CHANNEL_TYPE                   VARCHAR2(255),
+  SELLERPLACE_AREA               VARCHAR2(255),
+  NAME_SELLER_INDUSTRY           VARCHAR2(255),
+  CNT_PAYMENT                    VARCHAR2(255),
+  NAME_YIELD_GROUP               VARCHAR2(255),
+  PRODUCT_COMBINATION            VARCHAR2(255),
+  DAYS_FIRST_DRAWING             VARCHAR2(255),
+  DAYS_FIRST_DUE                 VARCHAR2(255),
+  DAYS_LAST_DUE_1ST_VERSION      VARCHAR2(255),
+  DAYS_LAST_DUE                  VARCHAR2(255),
+  DAYS_TERMINATION               VARCHAR2(255),
+  NFLAG_INSURED_ON_APPROVAL      VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_previous_application.bad'
+    LOGFILE hc_raw:'ext_previous_application.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('previous_application.csv')
+)
+REJECT LIMIT 0;
+
+-- credit_card_balance.csv  (3,840,312 rows, LF assumed, not measured; last column is numeric, so a CRLF file fails loudly in TO_NUMBER)
+EXEC p_drop_if_exists('EXT_CREDIT_CARD_BALANCE')
+CREATE TABLE ext_credit_card_balance (
+  SK_ID_PREV                     VARCHAR2(255),
+  SK_ID_CURR                     VARCHAR2(255),
+  MONTHS_BALANCE                 VARCHAR2(255),
+  AMT_BALANCE                    VARCHAR2(255),
+  AMT_CREDIT_LIMIT_ACTUAL        VARCHAR2(255),
+  AMT_DRAWINGS_ATM_CURRENT       VARCHAR2(255),
+  AMT_DRAWINGS_CURRENT           VARCHAR2(255),
+  AMT_DRAWINGS_OTHER_CURRENT     VARCHAR2(255),
+  AMT_DRAWINGS_POS_CURRENT       VARCHAR2(255),
+  AMT_INST_MIN_REGULARITY        VARCHAR2(255),
+  AMT_PAYMENT_CURRENT            VARCHAR2(255),
+  AMT_PAYMENT_TOTAL_CURRENT      VARCHAR2(255),
+  AMT_RECEIVABLE_PRINCIPAL       VARCHAR2(255),
+  AMT_RECIVABLE                  VARCHAR2(255),
+  AMT_TOTAL_RECEIVABLE           VARCHAR2(255),
+  CNT_DRAWINGS_ATM_CURRENT       VARCHAR2(255),
+  CNT_DRAWINGS_CURRENT           VARCHAR2(255),
+  CNT_DRAWINGS_OTHER_CURRENT     VARCHAR2(255),
+  CNT_DRAWINGS_POS_CURRENT       VARCHAR2(255),
+  CNT_INSTALMENT_MATURE_CUM      VARCHAR2(255),
+  NAME_CONTRACT_STATUS           VARCHAR2(255),
+  SK_DPD                         VARCHAR2(255),
+  SK_DPD_DEF                     VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_credit_card_balance.bad'
+    LOGFILE hc_raw:'ext_credit_card_balance.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('credit_card_balance.csv')
+)
+REJECT LIMIT 0;
+
+-- POS_CASH_balance.csv  (10,001,358 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_POS_CASH_BALANCE')
+CREATE TABLE ext_pos_cash_balance (
+  SK_ID_PREV                     VARCHAR2(255),
+  SK_ID_CURR                     VARCHAR2(255),
+  MONTHS_BALANCE                 VARCHAR2(255),
+  CNT_INSTALMENT                 VARCHAR2(255),
+  CNT_INSTALMENT_FUTURE          VARCHAR2(255),
+  NAME_CONTRACT_STATUS           VARCHAR2(255),
+  SK_DPD                         VARCHAR2(255),
+  SK_DPD_DEF                     VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_pos_cash_balance.bad'
+    LOGFILE hc_raw:'ext_pos_cash_balance.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('POS_CASH_balance.csv')
+)
+REJECT LIMIT 0;
+
+-- installments_payments.csv  (13,605,401 rows, LF assumed, not measured; last column is numeric, so a CRLF file fails loudly in TO_NUMBER)
+EXEC p_drop_if_exists('EXT_INSTALLMENTS_PAYMENTS')
+CREATE TABLE ext_installments_payments (
+  SK_ID_PREV                     VARCHAR2(255),
+  SK_ID_CURR                     VARCHAR2(255),
+  NUM_INSTALMENT_VERSION         VARCHAR2(255),
+  NUM_INSTALMENT_NUMBER          VARCHAR2(255),
+  DAYS_INSTALMENT                VARCHAR2(255),
+  DAYS_ENTRY_PAYMENT             VARCHAR2(255),
+  AMT_INSTALMENT                 VARCHAR2(255),
+  AMT_PAYMENT                    VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_installments_payments.bad'
+    LOGFILE hc_raw:'ext_installments_payments.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('installments_payments.csv')
+)
+REJECT LIMIT 0;
+
+-- bureau_balance.csv  (27,299,925 rows, LF, measured)
+EXEC p_drop_if_exists('EXT_BUREAU_BALANCE')
+CREATE TABLE ext_bureau_balance (
+  SK_ID_BUREAU                   VARCHAR2(255),
+  MONTHS_BALANCE                 VARCHAR2(255),
+  STATUS                         VARCHAR2(255)
+)
+ORGANIZATION EXTERNAL (
+  TYPE ORACLE_LOADER
+  DEFAULT DIRECTORY hc_raw
+  ACCESS PARAMETERS (
+    RECORDS DELIMITED BY 0x'0A'
+    CHARACTERSET AL32UTF8
+    SKIP 1
+    BADFILE hc_raw:'ext_bureau_balance.bad'
+    LOGFILE hc_raw:'ext_bureau_balance.log'
+    NODISCARDFILE
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    MISSING FIELD VALUES ARE NULL
+  )
+  LOCATION ('bureau_balance.csv')
+)
+REJECT LIMIT 0;
+
+-- -----------------------------------------------------------------------
+-- Smoke test on the smallest file: if Oracle cannot open the folder,
+-- this fails in seconds (KUP-04040 / KUP-04001) instead of mid-load.
+-- -----------------------------------------------------------------------
+PROMPT
+PROMPT ===== Smoke test: ext_column_description (expected 219) =====
+SELECT COUNT(*) AS rows_read FROM ext_column_description;
+
+PROMPT 01_external_tables: done
