@@ -22,7 +22,7 @@ Every step is checked automatically and every choice is written down, so
 anyone can follow why the result is what it is. Unfamiliar words are
 explained in the [glossary](docs/glossary.md).
 
-> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 (model) in progress.
+> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Model chosen on untouched clients: LightGBM, Gini 0.572. Next: calibration and scores in Oracle.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through

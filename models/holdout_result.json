@@ -1,0 +1,33 @@
+{
+  "stage": "3f",
+  "date": "2026-09-25",
+  "holdout_clients": 46309,
+  "holdout_defaults": 3747,
+  "model_fingerprint": {
+    "scorecard.json": "f48329731bfee517928e8757687e703db0c252671be546bf8505e2eeed91c189",
+    "lightgbm.txt": "41f167e05ebb5ac14cfb5c2d74afd747ad27f2d07df7a11d0a14dfcb3c339d6d"
+  },
+  "results": {
+    "Scorecard": {
+      "gini": 0.5037701323127954,
+      "ks": 0.3765125096019989,
+      "brier": 0.0684638039446906,
+      "mean_pd": 0.08033244540179611,
+      "psi_holdout_vs_test": 0.0052824876521167
+    },
+    "LightGBM": {
+      "gini": 0.5723645877841315,
+      "ks": 0.43272067648636714,
+      "brier": 0.06628648103355048,
+      "mean_pd": 0.08064843321538019,
+      "psi_holdout_vs_test": 0.004337848775996038
+    }
+  },
+  "gini_gain_lightgbm": 0.06859445547133602,
+  "gini_gain_ci95": [
+    0.060370076782306034,
+    0.07640717598068257
+  ],
+  "rule": "LightGBM wins if its Gini is higher by at least 0.02 (decision 16)",
+  "winner": "LightGBM"
+}
