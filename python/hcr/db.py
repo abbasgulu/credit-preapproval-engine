@@ -87,11 +87,20 @@ def connect() -> oracledb.Connection:
     return oracledb.connect(user=user, password=_password(service, user), dsn=dsn)
 
 
+def _numbers_as_float(cursor, metadata):
+    """Fetch every Oracle NUMBER as a float, so empty values become NaN in pandas
+    (otherwise a whole-number column with empty values would arrive as text-like 'object')."""
+    if metadata.type_code is oracledb.DB_TYPE_NUMBER:
+        return cursor.var(oracledb.DB_TYPE_BINARY_DOUBLE, arraysize=cursor.arraysize)
+    return None
+
+
 def read_sql(sql: str, params: dict | None = None, arraysize: int = 10_000) -> pd.DataFrame:
     """Run a query and return the result as a DataFrame with lower-case column names."""
     with connect() as con, con.cursor() as cur:
         cur.arraysize = arraysize      # rows fetched per round trip: bigger = faster for large tables
         cur.prefetchrows = arraysize + 1
+        cur.outputtypehandler = _numbers_as_float
         cur.execute(sql, params or {})
         columns = [d[0].lower() for d in cur.description]
         rows = cur.fetchall()

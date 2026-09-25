@@ -66,10 +66,10 @@ clients default almost 8 times as often as the highest fifth.
 
 ![Default rate by age](img/3c_age.png)
 
-From 12.5% under 25 to 3.6% at 65+, with no reversal. For fairness
-([decision 17](decisions.md)): older applicants are *safer* here, so a model
-that follows the data gives them more points, not fewer. The model report
-will show this for the final scorecard.
+From 12.5% under 25 to 3.6% at 65+, with no reversal: older applicants are
+*safer* here. The scorecard in the end did not use age at all — its
+information is carried by other facts — and any age limit a lender wants is
+kept as a separate, visible policy rule ([decision 20](decisions.md)).
 
 ### Credit-card use — going over the limit is a warning sign
 

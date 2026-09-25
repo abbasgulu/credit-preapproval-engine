@@ -133,12 +133,16 @@ PD = 1 / (1 + exp(-(a + b × raw_score)))
 
 ## 5. Fairness
 
-Gender is not a feature (decision 13). **Age** is a feature
-(`app_age_years`, decision 17): it is one of the strongest risk signals in
-this data, and in several jurisdictions age may be used in a statistically
-validated credit model provided older applicants are not scored down for their
-age. The model report shows the scorecard's points per age group, so this can
-be checked.
+Gender is not a feature (decision 13). **Age** is offered to the models like
+any other feature (decision 17). The scorecard excluded it by itself: next to
+the external score, employment length and income type, its weight pointed the
+wrong way, meaning its information was already there.
+
+A lender may still want an age limit — for example on age at the end of the
+loan term. That is a **policy** choice, not a repayment-risk estimate (in this
+data, older clients repay better), so it belongs in the decision engine as an
+explicit rule with its own reason code (Stage 4, decision 20), never hidden in
+the score.
 
 ## 6. Outputs
 
