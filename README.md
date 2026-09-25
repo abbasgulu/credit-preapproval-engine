@@ -4,7 +4,7 @@ An end-to-end credit pre-approval pipeline built on public data: from raw bureau
 transaction history to a calibrated probability of default, a credit limit and a
 reason for every decision.
 
-> **Status:** 🚧 In progress — Stage 1: loading raw data into Oracle.
+> **Status:** 🚧 In progress — Stage 1 complete (58.5M rows loaded and verified). Next: feature tables.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through
@@ -37,7 +37,7 @@ python/      reusable modules (hcr/) and runnable scripts
 notebooks/   EDA, modelling, calibration and limits
 dataiku/     flow export and screenshots
 tableau/     workbook and screenshots
-docs/        architecture, data dictionary, decision log
+docs/        architecture, data profiling, data dictionary, decision log
 ```
 
 ## How to run

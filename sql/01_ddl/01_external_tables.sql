@@ -426,7 +426,7 @@ ORGANIZATION EXTERNAL (
 )
 REJECT LIMIT 0;
 
--- credit_card_balance.csv  (3,840,312 rows, LF assumed, not measured; last column is numeric, so a CRLF file fails loudly in TO_NUMBER)
+-- credit_card_balance.csv  (3,840,312 rows, LF, measured in Oracle: 0 rows with CR, see sql/99_checks/02_raw_profiling.sql)
 EXEC p_drop_if_exists('EXT_CREDIT_CARD_BALANCE')
 CREATE TABLE ext_credit_card_balance (
   SK_ID_PREV                     VARCHAR2(255),
@@ -499,7 +499,7 @@ ORGANIZATION EXTERNAL (
 )
 REJECT LIMIT 0;
 
--- installments_payments.csv  (13,605,401 rows, LF assumed, not measured; last column is numeric, so a CRLF file fails loudly in TO_NUMBER)
+-- installments_payments.csv  (13,605,401 rows, LF, measured in Oracle: 0 rows with CR, see sql/99_checks/02_raw_profiling.sql)
 EXEC p_drop_if_exists('EXT_INSTALLMENTS_PAYMENTS')
 CREATE TABLE ext_installments_payments (
   SK_ID_PREV                     VARCHAR2(255),
