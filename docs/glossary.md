@@ -65,6 +65,8 @@ an example. If a document uses a word you do not know, it should be here.
 | **Gini** | How well the model ranks risky clients above safe ones: 0 = coin toss, 1 = perfect | Credit models are typically 0.4–0.7 |
 | **AUC** | Another scale for the same idea as Gini: Gini = 2 × AUC − 1 | AUC 0.75 = Gini 0.50 |
 | **KS** | The largest gap between the score distributions of good and bad clients | |
+| **Raw score** | A model's output before it is turned into a probability, on the "log-odds" scale: 0 = 50%, higher = riskier | Raw score -2.4 ≈ 8% |
+| **Platt scaling** | The calibration method used here: two numbers (a, b) adjust the raw score, PD = 1 / (1 + exp(-(a + b × raw score))) | [calibration.md](calibration.md) |
 | **Calibration** | Adjusting the model so its probabilities match reality | A group given 5% should default about 5% of the time |
 | **Brier score** | The average squared error of the predicted probabilities; lower is better | |
 | **PSI** (population stability index) | Whether new applicants look like the clients the model learned from | Below 0.1 = stable, above 0.25 = the model needs review |

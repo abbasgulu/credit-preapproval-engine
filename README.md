@@ -22,7 +22,7 @@ Every step is checked automatically and every choice is written down, so
 anyone can follow why the result is what it is. Unfamiliar words are
 explained in the [glossary](docs/glossary.md).
 
-> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Model chosen on untouched clients: LightGBM, Gini 0.572. Next: calibration and scores in Oracle.
+> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 complete: LightGBM chosen on untouched clients (Gini 0.572), calibrated, and every client's PD in Oracle. Next: decision engine.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through
@@ -93,6 +93,12 @@ All commands are run from the repository root in Windows `cmd`.
 12. Stage 3 — first look at the data (charts in `docs\img`, findings in
    [docs/exploration.md](docs/exploration.md)):
    `python python\scripts\explore.py`
+13. Stage 3 — models, the one-time holdout exam, calibration and scores:
+   `python python\scripts\train_scorecard.py`,
+   `python python\scripts\train_lightgbm.py`,
+   `python python\scripts\compare_holdout.py`,
+   `python python\scripts\calibrate_and_score.py`, then
+   `sqlplus /nolog @sql\99_checks\05_model_scores.sql`
 
 ## Licence
 

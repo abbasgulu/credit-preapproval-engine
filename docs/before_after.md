@@ -6,7 +6,7 @@ Each row will link to the script and the evidence once it is implemented.
 | # | Common problem | Approach in this project | Stage | Status |
 |---|---|---|---|---|
 | 1 | Exclusion lists (fraud, VIP, …) hard-coded inside procedures; changing them requires recompiling | `ref_exclusion_list` table — the code reads the table, the list is edited as data | 4 | Planned |
-| 2 | The same calibration formula copied in many places | One PL/SQL function `f_calibrate_pd` + coefficients in `ref_calibration` | 3 | Planned |
+| 2 | The same calibration formula copied in many places | Numbers (a, b) per model version in the table `ref_calibration`; the formula once, in the Oracle function `f_calibrate_pd`; PDs read from the view `v_scores`. **Evidence:** for all 712,510 scores (2 models × 356,255 clients) Oracle's PD equals Python's to within 1e-9 — [`05_model_scores.sql`](../sql/99_checks/05_model_scores.sql), [calibration.md](calibration.md) | 3 | ✅ Done |
 | 3 | Limit matrix written as a long `CASE`, with gaps at band boundaries | `ref_limit_grid` table + a check query that finds gaps and overlaps automatically | 4 | Planned |
 | 4 | Thresholds (minimum amount, age, cut-off, income multiple) scattered through code | `ref_rules` table with validity dates — the decision engine reads rules from data | 4 | Planned |
 | 5 | Snapshot tables truncated every day — no history | Snapshots kept by `load_date`; trends and day-over-day comparison come for free | 2 | Planned |

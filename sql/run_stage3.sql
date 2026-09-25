@@ -2,6 +2,10 @@
 -- run_stage3.sql
 -- Runs the SQL steps of Stage 3 (the model). Grows step by step:
 --   3b  split: v_model_input
+--   3g  calibration table + formula (ref_calibration, f_calibrate_pd),
+--       score table + view (model_scores, v_scores)
+--       -> then run python\scripts\calibrate_and_score.py
+--       -> then check:  sqlplus /nolog @sql\99_checks\05_model_scores.sql
 --
 -- Run from the repository root:
 --   sqlplus /nolog @sql\run_stage3.sql
@@ -18,6 +22,8 @@ VARIABLE run_start VARCHAR2(30)
 EXEC :run_start := TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')
 
 @sql\03_features\08_model_split.sql
+@sql\04_reference\01_ref_calibration.sql
+@sql\01_ddl\04_model_scores.sql
 
 PROMPT
 PROMPT ===== DQ results of this run =====

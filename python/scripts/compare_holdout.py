@@ -27,7 +27,6 @@ Output:
 Run from the repository root:
     python python\\scripts\\compare_holdout.py
 """
-import hashlib
 import json
 import sys
 from datetime import date
@@ -45,7 +44,7 @@ import pandas as pd  # noqa: E402
 
 from hcr.db import read_sql  # noqa: E402
 from hcr.metrics import brier, calibration_table, gini, ks, psi  # noqa: E402
-from hcr.woe import Binning  # noqa: E402
+from hcr.scoring import fingerprint, lightgbm_raw, scorecard_raw, to_pd  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 MODELS = ROOT / "models"
@@ -57,30 +56,12 @@ SURFACE, TEXT, TEXT_2, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e1e0d9"
 COLOURS = {"Scorecard": "#2a78d6", "LightGBM": "#eb6834"}   # categorical slots 1 and 2 (validated pair)
 
 
-def fingerprint() -> dict:
-    """SHA-256 of the model files: proves which models took the exam."""
-    files = ["scorecard.json", "lightgbm.txt"]
-    return {f: hashlib.sha256((MODELS / f).read_bytes()).hexdigest() for f in files}
-
-
-# ---------------------------------------------------------------------------
-# Scoring
-# ---------------------------------------------------------------------------
 def scorecard_pd(card: dict, data: pd.DataFrame) -> np.ndarray:
-    logit = np.full(len(data), card["intercept"])
-    for f in card["features"]:
-        b = Binning(feature=f["feature"], kind=f["kind"], edges=f["edges"],
-                    categories=f["categories"], woe=f["woe"], iv=f["iv"])
-        logit += f["coefficient"] * b.transform(data[f["feature"]]).to_numpy()
-    return 1 / (1 + np.exp(-logit))
+    return to_pd(scorecard_raw(card, data))
 
 
 def lightgbm_pd(booster: lgb.Booster, meta: dict, data: pd.DataFrame) -> np.ndarray:
-    x = data[meta["features"]].copy()
-    # text columns get exactly the category lists the model was trained with
-    for col, cats in zip(meta["categorical"], booster.pandas_categorical or []):
-        x[col] = pd.Categorical(x[col], categories=cats)
-    return booster.predict(x)
+    return to_pd(lightgbm_raw(booster, meta, data))
 
 
 # ---------------------------------------------------------------------------
