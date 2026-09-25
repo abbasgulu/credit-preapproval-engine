@@ -103,10 +103,11 @@ scored in plain SQL.
 
 ### 3b. LightGBM
 
-Uses the features directly (it handles missing values itself). Stops adding
-trees when the `valid` part stops improving (*early stopping*), so it does not
-memorise the training clients. Settings are fixed and documented, not searched
-at length.
+Uses the features directly (it handles missing values itself), except age
+(decision 21). Its two main settings are chosen by 5-fold cross-validation
+inside `fit` from 6 combinations declared in advance; the number of trees is
+where the cross-validated result stops improving (*early stopping*), so it does
+not memorise the training clients. `valid` is only used to measure the result.
 
 **SHAP** values show which features drive each individual prediction, so the
 more accurate model can still be explained.
