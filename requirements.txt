@@ -4,6 +4,7 @@ pandas
 numpy
 oracledb
 python-dotenv
+keyring
 scikit-learn
 lightgbm
 shap

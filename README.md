@@ -4,6 +4,24 @@ An end-to-end credit pre-approval pipeline built on public data: from raw bureau
 transaction history to a calibrated probability of default, a credit limit and a
 reason for every decision.
 
+## In plain words
+
+When someone asks for a loan, the lender has to decide quickly and fairly:
+yes or no, how much, and why. This project builds that decision step by step
+on public, anonymised data from a consumer lender (Home Credit, published on
+Kaggle):
+
+1. **Collect** what is known about each applicant: loans at other lenders,
+   earlier applications, how past loans were repaid.
+2. **Summarise** it into one row per person — 84 facts such as "share of
+   payments made late in the last year".
+3. **Estimate** the chance that the person will have trouble repaying.
+4. **Decide**: pre-approved or not, up to what limit, and the main reason.
+
+Every step is checked automatically and every choice is written down, so
+anyone can follow why the result is what it is. Unfamiliar words are
+explained in the [glossary](docs/glossary.md).
+
 > **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 87-column feature table (one row per client) built and verified by 35 automated data-quality checks. Next: model.
 
 The project also addresses ten engineering problems that are common in legacy
@@ -37,7 +55,7 @@ python/      reusable modules (hcr/) and runnable scripts
 notebooks/   EDA, modelling, calibration and limits
 dataiku/     flow export and screenshots
 tableau/     workbook and screenshots
-docs/        architecture, data profiling, data dictionary, decision log
+docs/        glossary, design notes, data profiling, data dictionary, decision log
 ```
 
 ## How to run
@@ -55,7 +73,10 @@ All commands are run from the repository root in Windows `cmd`.
 4. Point Oracle at the data folder (once):
    `sqlplus / as sysdba @sql\00_setup\03_create_directory.sql "%CD%\data\raw"`
 5. Store the HC password in an Oracle Wallet (once), so no script asks for
-   or contains a password: [docs/setup_wallet.md](docs/setup_wallet.md)
+   or contains a password: [docs/setup_wallet.md](docs/setup_wallet.md).
+   For Python: `python -m pip install -r requirements.txt`, create `config\.env`
+   from `config\.env.example`, and store the password once in Windows
+   Credential Manager (same document, section "Python")
 6. Stage 1 — external tables, raw tables and load:
    `sqlplus /nolog @sql\run_stage1.sql`
 7. Check the raw layer at any time:
@@ -65,6 +86,8 @@ All commands are run from the repository root in Windows `cmd`.
    (results of every check are stored in the `dq_log` table)
 9. Regenerate only [docs/data_dictionary.md](docs/data_dictionary.md):
    `sqlplus /nolog @sql\run_data_dictionary.sql`
+10. Stage 3 — check that Python reaches Oracle:
+   `python python\scripts\check_db.py`
 
 ## Licence
 
