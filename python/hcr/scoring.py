@@ -49,13 +49,26 @@ def scorecard_raw(card: dict, data: pd.DataFrame) -> np.ndarray:
     return logit
 
 
-def lightgbm_raw(booster: lgb.Booster, meta: dict, data: pd.DataFrame) -> np.ndarray:
-    """Log-odds of LightGBM (raw_score=True)."""
+def lightgbm_input(booster: lgb.Booster, meta: dict, data: pd.DataFrame) -> pd.DataFrame:
+    """The model's features, prepared exactly as in training."""
     x = data[meta["features"]].copy()
     # text columns get exactly the category lists the model was trained with
     for col, cats in zip(meta["categorical"], booster.pandas_categorical or []):
         x[col] = pd.Categorical(x[col], categories=cats)
-    return booster.predict(x, raw_score=True)
+    return x
+
+
+def lightgbm_raw(booster: lgb.Booster, meta: dict, data: pd.DataFrame) -> np.ndarray:
+    """Log-odds of LightGBM (raw_score=True)."""
+    return booster.predict(lightgbm_input(booster, meta, data), raw_score=True)
+
+
+def lightgbm_contributions(booster: lgb.Booster, meta: dict, data: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """SHAP values: how much each feature pushed each client's raw score up or down,
+    compared with an average client. Returns (one column per feature, the average-client
+    baseline). Baseline + sum of a client's columns = the client's raw score, exactly."""
+    out = booster.predict(lightgbm_input(booster, meta, data), pred_contrib=True)
+    return out[:, :-1], out[:, -1]
 
 
 def to_pd(raw: np.ndarray, a: float = 0.0, b: float = 1.0) -> np.ndarray:

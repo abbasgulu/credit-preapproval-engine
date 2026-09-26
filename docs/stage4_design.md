@@ -140,7 +140,8 @@ A dashboard-ready view `v_decision_summary` feeds Tableau (Stage 6).
    trade-off table also shows fixed approval rates and other targets).
 2. **Age rule:** age at the end of a 24-month offer at most 70 (illustrative).
 3. **Reasons for risk declines:** `PD_ABOVE_CUTOFF` plus the 3 facts that
-   raised the client's risk most (SHAP), in plain words.
+   raised the client's risk most (SHAP), in plain words — built in 4e
+   ([risk_factors.md](risk_factors.md), decision 28).
 
 ## 9. Order of work
 
