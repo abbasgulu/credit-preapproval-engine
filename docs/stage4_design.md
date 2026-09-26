@@ -126,6 +126,11 @@ On the `holdout` clients (known outcome, report only):
 - declines by main reason
 - the same for the `test` clients (outcome unknown): expected default rate
   from the calibrated PD
+- the debt rule at other values, as a decision aid (nothing is changed)
+- a reconciliation: Python recomputes every decision and limit and must
+  match the engine exactly
+
+Results: [decision_engine.md](decision_engine.md).
 
 A dashboard-ready view `v_decision_summary` feeds Tableau (Stage 6).
 

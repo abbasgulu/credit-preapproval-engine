@@ -61,6 +61,8 @@ an example. If a document uses a word you do not know, it should be here.
 | **Cut-off** | The highest PD that can still be approved | PD cut-off 14.5%: a client with PD 15% is declined |
 | **Limit grid** | A table of income multiples by risk band and income band; lower risk and higher income give a higher multiple | PD under 2%, income 100k–250k → 3 × income |
 | **Reason code** | A short code for why a client was declined, with a plain-words description and a priority | `PD_ABOVE_CUTOFF`: estimated chance of repayment trouble is above the accepted level |
+| **Decision aid (sensitivity table)** | The same clients re-decided with a rule set to other values, to show what a change would do — without changing anything | Debt rule at 3, 4, 5, 6, 8, 10 × income |
+| **Reconciliation** | Computing the same result in two independent ways and proving they match | Python recomputes every decision of the Oracle engine: 0 differences |
 | **Main reason** | Of all reasons that applied, the one with the highest priority (lowest number) | Excluded and too risky → main reason is the exclusion |
 
 ## Model

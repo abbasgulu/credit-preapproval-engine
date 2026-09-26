@@ -34,7 +34,7 @@ SET SERVEROUTPUT OFF
 
 PROMPT
 PROMPT ===== DQ results of this run =====
-COLUMN table_name FORMAT A16
+COLUMN table_name FORMAT A18
 COLUMN check_name FORMAT A75
 COLUMN severity   FORMAT A5
 COLUMN passed     FORMAT A6

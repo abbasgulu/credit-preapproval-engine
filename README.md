@@ -22,7 +22,7 @@ Every step is checked automatically and every choice is written down, so
 anyone can follow why the result is what it is. Unfamiliar words are
 explained in the [glossary](docs/glossary.md).
 
-> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 complete: LightGBM chosen on untouched clients (Gini 0.572), calibrated, and every client's PD in Oracle. Next: decision engine.
+> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 complete: LightGBM chosen on untouched clients (Gini 0.572), calibrated, and every client's PD in Oracle. Stage 4: decision engine running — every client approved with a limit or declined with reasons, all rules read from tables, 12 automated checks on every run ([results](docs/decision_engine.md)). Next: the three facts behind each client's risk, in plain words.
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through
@@ -104,7 +104,9 @@ All commands are run from the repository root in Windows `cmd`.
    every client's decision with its limit and reasons, checked automatically:
    `sqlplus /nolog @sql\run_stage4.sql`,
    `python python\scripts\choose_cutoff.py`,
-   `sqlplus /nolog @sql\run_decisions.sql`
+   `sqlplus /nolog @sql\run_decisions.sql`, then the evaluation
+   ([docs/decision_engine.md](docs/decision_engine.md)):
+   `python python\scripts\evaluate_decisions.py`
 
 ## Licence
 

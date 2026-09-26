@@ -4,6 +4,7 @@
 --   4a  reference tables: rules, reason codes, limit grid, exclusion list
 --   4b  (Python) python\scripts\choose_cutoff.py writes PD_CUTOFF
 --   4c  decision tables and the engine p_run_decisions (created, not run)
+--   4d  v_decision_summary (dashboard-ready totals)
 --
 -- The engine itself is run by sql\run_decisions.sql (once PD_CUTOFF exists).
 -- Re-running this script is safe: reference rows are only added, and the
@@ -29,6 +30,7 @@ EXEC :run_start := TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')
 @sql\04_reference\05_ref_exclusion_list.sql
 @sql\05_decision\01_decision_tables.sql
 @sql\05_decision\02_p_run_decisions.sql
+@sql\05_decision\04_v_decision_summary.sql
 
 PROMPT
 PROMPT ===== Rules in force =====
