@@ -12,6 +12,10 @@
 -- All values are ILLUSTRATIVE choices for a public dataset (decision 25).
 -- PD_CUTOFF is not seeded here: it is derived from TARGET_BAD_RATE by
 -- python\scripts\choose_cutoff.py (Stage 4b).
+--
+-- f_rule(code, date) returns the value of one rule in force on a date and
+-- stops with a clear error if the rule is missing or has two rows in force
+-- (Stage 4c). Used by the decision engine and its checks.
 -- =====================================================================
 
 WHENEVER SQLERROR EXIT FAILURE
@@ -64,5 +68,28 @@ WHEN NOT MATCHED THEN INSERT (rule_code, rule_value, unit, description, set_by, 
      VALUES (RTRIM(s.rule_code), s.rule_value, RTRIM(s.unit), RTRIM(s.description),
              'illustrative choice (decision 25)', DATE '2026-09-25', SYSTIMESTAMP);
 COMMIT;
+
+CREATE OR REPLACE FUNCTION f_rule (
+  p_rule_code IN VARCHAR2,
+  p_date      IN DATE DEFAULT TRUNC(SYSDATE)
+) RETURN NUMBER
+IS
+  v_value NUMBER;
+BEGIN
+  SELECT rule_value INTO v_value
+  FROM   ref_rules
+  WHERE  rule_code = p_rule_code
+  AND    valid_from <= p_date
+  AND    (valid_to IS NULL OR valid_to > p_date);
+  RETURN v_value;
+EXCEPTION
+  -- turned into errors on purpose: inside a SQL query a missing row would
+  -- otherwise quietly become NULL
+  WHEN NO_DATA_FOUND THEN
+    RAISE_APPLICATION_ERROR(-20021, 'No rule ' || p_rule_code || ' in force on ' || TO_CHAR(p_date, 'YYYY-MM-DD'));
+  WHEN TOO_MANY_ROWS THEN
+    RAISE_APPLICATION_ERROR(-20022, 'Rule ' || p_rule_code || ' has more than one row in force on ' || TO_CHAR(p_date, 'YYYY-MM-DD'));
+END;
+/
 
 PROMPT 02_ref_rules: done

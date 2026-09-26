@@ -7,6 +7,9 @@
 -- auditor can read. The engine writes these codes at the moment of the
 -- decision; reports only look them up here, they never reconstruct them.
 -- priority: when several reasons apply, the lowest number is the main one.
+-- Stage 4c added LIMIT_BELOW_MIN: a client with no debt but a small income
+-- can also end below the minimum offer, and "debt too high" would then be
+-- a wrong reason (decision 26).
 -- =====================================================================
 
 WHENEVER SQLERROR EXIT FAILURE
@@ -38,7 +41,8 @@ USING (
   SELECT 'CURRENT_ARREARS', 'POLICY', 30, 'Currently behind on a payment at another lender.' FROM dual UNION ALL
   SELECT 'AGE_AT_MATURITY', 'POLICY', 40, 'Would be above the maximum age at the end of the offered term.' FROM dual UNION ALL
   SELECT 'PD_ABOVE_CUTOFF', 'RISK',   50, 'Estimated chance of repayment trouble is above the accepted level.' FROM dual UNION ALL
-  SELECT 'DEBT_TOO_HIGH',   'AFFORDABILITY', 60, 'Existing debt leaves no room for an offer of the minimum size.' FROM dual
+  SELECT 'DEBT_TOO_HIGH',   'AFFORDABILITY', 60, 'Existing debt leaves no room for an offer of the minimum size.' FROM dual UNION ALL
+  SELECT 'LIMIT_BELOW_MIN', 'AFFORDABILITY', 70, 'The limit allowed for this income and risk level is below the minimum offer size.' FROM dual
 ) s
 ON (t.reason_code = RTRIM(s.reason_code))
 WHEN MATCHED THEN UPDATE SET t.category = RTRIM(s.category), t.priority = s.priority, t.description = RTRIM(s.description)

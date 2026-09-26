@@ -2,6 +2,12 @@
 -- run_stage4.sql
 -- Runs the SQL steps of Stage 4 (the decision engine). Grows step by step:
 --   4a  reference tables: rules, reason codes, limit grid, exclusion list
+--   4b  (Python) python\scripts\choose_cutoff.py writes PD_CUTOFF
+--   4c  decision tables and the engine p_run_decisions (created, not run)
+--
+-- The engine itself is run by sql\run_decisions.sql (once PD_CUTOFF exists).
+-- Re-running this script is safe: reference rows are only added, and the
+-- decision tables are created only if they do not exist.
 --
 -- Run from the repository root:
 --   sqlplus /nolog @sql\run_stage4.sql
@@ -21,6 +27,8 @@ EXEC :run_start := TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')
 @sql\04_reference\03_ref_reason_codes.sql
 @sql\04_reference\04_ref_limit_grid.sql
 @sql\04_reference\05_ref_exclusion_list.sql
+@sql\05_decision\01_decision_tables.sql
+@sql\05_decision\02_p_run_decisions.sql
 
 PROMPT
 PROMPT ===== Rules in force =====

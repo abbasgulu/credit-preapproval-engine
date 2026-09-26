@@ -99,6 +99,12 @@ All commands are run from the repository root in Windows `cmd`.
    `python python\scripts\compare_holdout.py`,
    `python python\scripts\calibrate_and_score.py`, then
    `sqlplus /nolog @sql\99_checks\05_model_scores.sql`
+14. Stage 4 — the decision engine: reference tables (rules, reason codes,
+   limit grid, exclusion list) and the engine, then the PD cut-off, then
+   every client's decision with its limit and reasons, checked automatically:
+   `sqlplus /nolog @sql\run_stage4.sql`,
+   `python python\scripts\choose_cutoff.py`,
+   `sqlplus /nolog @sql\run_decisions.sql`
 
 ## Licence
 

@@ -45,7 +45,23 @@ an example. If a document uses a word you do not know, it should be here.
 | **External table** | A table that reads a CSV file directly, without importing it first | `ext_bureau` reads `bureau.csv` |
 | **Oracle Wallet** | An encrypted file that holds the database password, so scripts connect without one | [setup_wallet.md](setup_wallet.md) |
 | **Windows Credential Manager** | The password store built into Windows; Python reads the database password from it | [setup_wallet.md](setup_wallet.md) |
-| **Partitioning** | Splitting a large table into parts, e.g. one part per date | Used for snapshots |
+| **Partitioning** | Splitting a large table into parts, e.g. one part per date; one part can be emptied or refilled without touching the others | `decisions` has one part per run date |
+| **Stored procedure** | A program saved inside the database and run there, next to the data | `p_run_decisions` makes all decisions |
+| **Temporary table** | A table whose rows only the current session sees and which empties itself at the end of the transaction — a scratch pad | `decision_work` |
+| **Transaction** | A group of changes that is saved all together or not at all | The engine writes all 356,255 decisions in one transaction: never half a run |
+| **Fingerprint (hash)** | A short code computed from a text or file; any change to the content gives a different code | Two runs with the same rule-set fingerprint used exactly the same rules |
+
+## Decisions
+
+| Term | Meaning | Example |
+|---|---|---|
+| **Decision engine** | The program that turns each client's facts and PD into a decision, a limit and reasons, using only rules stored as data | [stage4_design.md](stage4_design.md) |
+| **Exclusion list** | Clients who get no offer whatever their score, each with a reason code | A credit at another lender was written off |
+| **Policy rule** | An eligibility rule that is a lender's choice, not a risk estimate | Age at the end of the offer at most 70 |
+| **Cut-off** | The highest PD that can still be approved | PD cut-off 14.5%: a client with PD 15% is declined |
+| **Limit grid** | A table of income multiples by risk band and income band; lower risk and higher income give a higher multiple | PD under 2%, income 100k–250k → 3 × income |
+| **Reason code** | A short code for why a client was declined, with a plain-words description and a priority | `PD_ABOVE_CUTOFF`: estimated chance of repayment trouble is above the accepted level |
+| **Main reason** | Of all reasons that applied, the one with the highest priority (lowest number) | Excluded and too risky → main reason is the exclusion |
 
 ## Model
 
