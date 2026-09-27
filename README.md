@@ -109,6 +109,9 @@ All commands are run from the repository root in Windows `cmd`.
    `python python\scripts\evaluate_decisions.py`, and the three facts behind
    each risk decline ([docs/risk_factors.md](docs/risk_factors.md)):
    `python python\scripts\explain_decisions.py`
+15. Stage 6 — the dashboard's summary files (reconciled with the engine's run),
+   read by Tableau Public ([tableau/README.md](tableau/README.md)):
+   `python python\scripts\export_tableau.py`
 
 ## Licence
 

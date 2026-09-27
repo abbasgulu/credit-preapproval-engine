@@ -1,0 +1,22 @@
+split,split_label,debt_multiple,debt_rule,in_force,clients,approved,approval_rate,bad_rate_approved,expected_bad_rate_approved,avg_limit,declined_by_debt_rule
+valid,Valid (cut-off chosen here),3,3 x income,0,46342,26535,0.572591,0.046618,0.047151,338281.67,10569
+valid,Valid (cut-off chosen here),4,4 x income,0,46342,28555,0.61618,0.046787,0.047494,364979.22,8549
+valid,Valid (cut-off chosen here),5,5 x income,1,46342,30152,0.650641,0.047194,0.047669,374600.83,6952
+valid,Valid (cut-off chosen here),6,6 x income,0,46342,31418,0.67796,0.047552,0.047873,380559.69,5686
+valid,Valid (cut-off chosen here),8,8 x income,0,46342,33187,0.716132,0.048272,0.048205,388225.36,3917
+valid,Valid (cut-off chosen here),10,10 x income,0,46342,34310,0.740365,0.04847,0.048348,392440.87,2794
+valid,Valid (cut-off chosen here),99,No debt rule,0,46342,37104,0.800656,0.04924,0.048591,402256.74,0
+holdout,"Holdout (final exam, report only)",3,3 x income,0,46309,26728,0.577166,0.045982,0.046908,336847.33,10426
+holdout,"Holdout (final exam, report only)",4,4 x income,0,46309,28801,0.621931,0.04663,0.047205,363321.03,8353
+holdout,"Holdout (final exam, report only)",5,5 x income,1,46309,30361,0.655618,0.047166,0.047466,374077.0,6793
+holdout,"Holdout (final exam, report only)",6,6 x income,0,46309,31578,0.681898,0.047058,0.047691,380885.31,5576
+holdout,"Holdout (final exam, report only)",8,8 x income,0,46309,33345,0.720054,0.047293,0.047974,388907.17,3809
+holdout,"Holdout (final exam, report only)",10,10 x income,0,46309,34440,0.7437,0.047793,0.048173,393755.91,2714
+holdout,"Holdout (final exam, report only)",99,No debt rule,0,46309,37154,0.802306,0.047801,0.048341,403576.52,0
+test,"Test (new applicants, outcome unknown)",3,3 x income,0,48744,27936,0.573117,,0.046047,353234.34,12261
+test,"Test (new applicants, outcome unknown)",4,4 x income,0,48744,30303,0.621677,,0.046362,384070.91,9894
+test,"Test (new applicants, outcome unknown)",5,5 x income,1,48744,32082,0.658173,,0.046685,397383.07,8115
+test,"Test (new applicants, outcome unknown)",6,6 x income,0,48744,33541,0.688105,,0.046899,405610.22,6656
+test,"Test (new applicants, outcome unknown)",8,8 x income,0,48744,35645,0.731269,,0.047371,415871.09,4552
+test,"Test (new applicants, outcome unknown)",10,10 x income,0,48744,36968,0.758411,,0.047551,421655.32,3229
+test,"Test (new applicants, outcome unknown)",99,No debt rule,0,48744,40197,0.824655,,0.047778,434297.84,0

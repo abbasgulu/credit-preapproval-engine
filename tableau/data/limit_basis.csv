@@ -1,0 +1,4 @@
+limit_basis,clients,avg_limit,min_limit,max_limit,limit_basis_label
+DEBT,25966,348683.89,50004.45,1499998.5,Debt rule (room left)
+GRID,203888,362626.6,50155.88,1498500.0,Limit grid (income x multiple)
+MAX_LIMIT,3523,1500000.0,1500000.0,1500000.0,Maximum limit

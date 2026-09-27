@@ -1,0 +1,29 @@
+split,decision,outcome,outcome_category,outcome_order,clients,clients_known_outcome,defaults,default_rate,avg_pd,total_limit,avg_limit,outcome_label,split_order,share_of_split
+fit,APPROVE,APPROVED,APPROVED,0,140782,140782,5628,0.039977,0.047459,52872479356.74,375562.78,Pre-approved,1,0.655227
+fit,DECLINE,EXCL_WRITTEN_OFF,EXCLUSION,10,3630,3630,359,0.098898,0.096027,,,A credit at another lender was written off or sold to a debt collector.,1,0.016895
+fit,DECLINE,CURRENT_ARREARS,POLICY,30,2315,2315,361,0.15594,0.154694,,,Currently behind on a payment at another lender.,1,0.010774
+fit,DECLINE,AGE_AT_MATURITY,POLICY,40,512,512,11,0.021484,0.027573,,,Would be above the maximum age at the end of the offered term.,1,0.002383
+fit,DECLINE,PD_ABOVE_CUTOFF,RISK,50,31824,31824,9172,0.28821,0.252049,,,Estimated chance of repayment trouble is above the accepted level.,1,0.148115
+fit,DECLINE,DEBT_TOO_HIGH,AFFORDABILITY,60,32704,32704,1410,0.043114,0.0529,,,Existing debt leaves no room for an offer of the minimum size.,1,0.152211
+fit,DECLINE,LIMIT_BELOW_MIN,AFFORDABILITY,70,3093,3093,320,0.103459,0.105192,,,The limit allowed for this income and risk level is below the minimum offer size.,1,0.014395
+valid,APPROVE,APPROVED,APPROVED,0,30152,30152,1423,0.047194,0.047669,11294964209.24,374600.83,Pre-approved,2,0.650641
+valid,DECLINE,EXCL_WRITTEN_OFF,EXCLUSION,10,806,806,90,0.111663,0.094286,,,A credit at another lender was written off or sold to a debt collector.,2,0.017392
+valid,DECLINE,CURRENT_ARREARS,POLICY,30,462,462,90,0.194805,0.163827,,,Currently behind on a payment at another lender.,2,0.009969
+valid,DECLINE,AGE_AT_MATURITY,POLICY,40,113,113,4,0.035398,0.025813,,,Would be above the maximum age at the end of the offered term.,2,0.002438
+valid,DECLINE,PD_ABOVE_CUTOFF,RISK,50,7035,7035,1737,0.246908,0.252194,,,Estimated chance of repayment trouble is above the accepted level.,2,0.151806
+valid,DECLINE,DEBT_TOO_HIGH,AFFORDABILITY,60,7133,7133,418,0.058601,0.053927,,,Existing debt leaves no room for an offer of the minimum size.,2,0.153921
+valid,DECLINE,LIMIT_BELOW_MIN,AFFORDABILITY,70,641,641,55,0.085803,0.102888,,,The limit allowed for this income and risk level is below the minimum offer size.,2,0.013832
+holdout,APPROVE,APPROVED,APPROVED,0,30361,30361,1432,0.047166,0.047466,11357351700.56,374077.0,Pre-approved,3,0.655618
+holdout,DECLINE,EXCL_WRITTEN_OFF,EXCLUSION,10,807,807,89,0.110285,0.095672,,,A credit at another lender was written off or sold to a debt collector.,3,0.017426
+holdout,DECLINE,CURRENT_ARREARS,POLICY,30,448,448,65,0.145089,0.144461,,,Currently behind on a payment at another lender.,3,0.009674
+holdout,DECLINE,AGE_AT_MATURITY,POLICY,40,110,110,2,0.018182,0.023719,,,Would be above the maximum age at the end of the offered term.,3,0.002375
+holdout,DECLINE,PD_ABOVE_CUTOFF,RISK,50,6935,6935,1739,0.250757,0.252678,,,Estimated chance of repayment trouble is above the accepted level.,3,0.149755
+holdout,DECLINE,DEBT_TOO_HIGH,AFFORDABILITY,60,6970,6970,363,0.05208,0.053561,,,Existing debt leaves no room for an offer of the minimum size.,3,0.150511
+holdout,DECLINE,LIMIT_BELOW_MIN,AFFORDABILITY,70,678,678,57,0.084071,0.104171,,,The limit allowed for this income and risk level is below the minimum offer size.,3,0.014641
+test,APPROVE,APPROVED,APPROVED,0,32082,0,,,0.046685,12748843501.96,397383.07,Pre-approved,4,0.658173
+test,DECLINE,EXCL_WRITTEN_OFF,EXCLUSION,10,796,0,,,0.077997,,,A credit at another lender was written off or sold to a debt collector.,4,0.01633
+test,DECLINE,CURRENT_ARREARS,POLICY,30,445,0,,,0.148325,,,Currently behind on a payment at another lender.,4,0.009129
+test,DECLINE,AGE_AT_MATURITY,POLICY,40,15,0,,,0.024548,,,Would be above the maximum age at the end of the offered term.,4,0.000308
+test,DECLINE,PD_ABOVE_CUTOFF,RISK,50,6694,0,,,0.238663,,,Estimated chance of repayment trouble is above the accepted level.,4,0.13733
+test,DECLINE,DEBT_TOO_HIGH,AFFORDABILITY,60,8258,0,,,0.052979,,,Existing debt leaves no room for an offer of the minimum size.,4,0.169416
+test,DECLINE,LIMIT_BELOW_MIN,AFFORDABILITY,70,454,0,,,0.106055,,,The limit allowed for this income and risk level is below the minimum offer size.,4,0.009314

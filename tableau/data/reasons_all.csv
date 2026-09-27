@@ -1,0 +1,25 @@
+split,reason_code,clients,description,category,reason_order,share_of_split
+fit,EXCL_WRITTEN_OFF,3630,A credit at another lender was written off or sold to a debt collector.,EXCLUSION,10,0.016895
+fit,CURRENT_ARREARS,2437,Currently behind on a payment at another lender.,POLICY,30,0.011342
+fit,AGE_AT_MATURITY,525,Would be above the maximum age at the end of the offered term.,POLICY,40,0.002443
+fit,PD_ABOVE_CUTOFF,33385,Estimated chance of repayment trouble is above the accepted level.,RISK,50,0.15538
+fit,DEBT_TOO_HIGH,42207,Existing debt leaves no room for an offer of the minimum size.,AFFORDABILITY,60,0.19644
+fit,LIMIT_BELOW_MIN,11102,The limit allowed for this income and risk level is below the minimum offer size.,AFFORDABILITY,70,0.051671
+holdout,EXCL_WRITTEN_OFF,807,A credit at another lender was written off or sold to a debt collector.,EXCLUSION,10,0.017426
+holdout,CURRENT_ARREARS,473,Currently behind on a payment at another lender.,POLICY,30,0.010214
+holdout,AGE_AT_MATURITY,112,Would be above the maximum age at the end of the offered term.,POLICY,40,0.002419
+holdout,PD_ABOVE_CUTOFF,7253,Estimated chance of repayment trouble is above the accepted level.,RISK,50,0.156622
+holdout,DEBT_TOO_HIGH,8975,Existing debt leaves no room for an offer of the minimum size.,AFFORDABILITY,60,0.193807
+holdout,LIMIT_BELOW_MIN,2413,The limit allowed for this income and risk level is below the minimum offer size.,AFFORDABILITY,70,0.052107
+test,EXCL_WRITTEN_OFF,796,A credit at another lender was written off or sold to a debt collector.,EXCLUSION,10,0.01633
+test,CURRENT_ARREARS,467,Currently behind on a payment at another lender.,POLICY,30,0.009581
+test,AGE_AT_MATURITY,16,Would be above the maximum age at the end of the offered term.,POLICY,40,0.000328
+test,PD_ABOVE_CUTOFF,6974,Estimated chance of repayment trouble is above the accepted level.,RISK,50,0.143074
+test,DEBT_TOO_HIGH,10438,Existing debt leaves no room for an offer of the minimum size.,AFFORDABILITY,60,0.214139
+test,LIMIT_BELOW_MIN,1682,The limit allowed for this income and risk level is below the minimum offer size.,AFFORDABILITY,70,0.034507
+valid,EXCL_WRITTEN_OFF,806,A credit at another lender was written off or sold to a debt collector.,EXCLUSION,10,0.017392
+valid,CURRENT_ARREARS,487,Currently behind on a payment at another lender.,POLICY,30,0.010509
+valid,AGE_AT_MATURITY,117,Would be above the maximum age at the end of the offered term.,POLICY,40,0.002525
+valid,PD_ABOVE_CUTOFF,7380,Estimated chance of repayment trouble is above the accepted level.,RISK,50,0.159251
+valid,DEBT_TOO_HIGH,9157,Existing debt leaves no room for an offer of the minimum size.,AFFORDABILITY,60,0.197596
+valid,LIMIT_BELOW_MIN,2458,The limit allowed for this income and risk level is below the minimum offer size.,AFFORDABILITY,70,0.05304

@@ -1,0 +1,51 @@
+feature_name,short_label,clients_in_top3,clients_first,share_in_top3,share_first,explained_clients
+app_ext_source_mean,Average external score,47655,42312,0.866581,0.769421,54992
+app_credit_term,Number of payments,14511,1499,0.263875,0.027259,54992
+app_ext_source_3,External score 3,13029,287,0.236925,0.005219,54992
+app_employed_years,Years in current job,11996,722,0.218141,0.013129,54992
+cc_util_max_12m,"Card use, highest",9267,2691,0.168515,0.048934,54992
+prv_granted_to_asked_avg,Granted versus asked,7528,627,0.136893,0.011402,54992
+app_credit_to_goods,Credit to price of goods,6242,576,0.113507,0.010474,54992
+pos_instalments_left_sum,Instalments still to pay,6242,2202,0.113507,0.040042,54992
+app_ext_source_2,External score 2,6220,105,0.113107,0.001909,54992
+prv_approved_credit_sum,Earlier approved credit,6183,606,0.112435,0.01102,54992
+bur_last_credit_days_ago,Days since last credit elsewhere,5002,463,0.090959,0.008419,54992
+prv_refused_share,Share of earlier applications refused,4807,258,0.087413,0.004692,54992
+cc_drawings_avg_12m,Card spending,3667,765,0.066682,0.013911,54992
+ins_days_late_max_12m,"Longest delay, last year",3586,761,0.065209,0.013838,54992
+app_ext_source_1,External score 1,3103,42,0.056426,0.000764,54992
+app_annuity_amt,Regular payment,2848,17,0.051789,0.000309,54992
+bur_debt_to_income,Debt elsewhere to income,2528,55,0.04597,0.001,54992
+pos_dpd_def_max_all,Longest delay on a real amount,1333,68,0.02424,0.001237,54992
+bur_max_overdue_amt_ever,Largest overdue elsewhere,1114,135,0.020257,0.002455,54992
+bur_new_credit_cnt_12m,"New credits elsewhere, last year",1091,189,0.019839,0.003437,54992
+ins_late_share_all,Instalments paid late,1068,81,0.019421,0.001473,54992
+ins_late_share_12m,"Paid late, last year",1055,36,0.019185,0.000655,54992
+bur_active_cnt,Active credits elsewhere,899,106,0.016348,0.001928,54992
+app_region_rating,Region rating,815,5,0.01482,9.1e-05,54992
+ins_underpaid_share_12m,"Underpaid, last year",651,134,0.011838,0.002437,54992
+bur_active_overdue_sum,Overdue amount elsewhere,549,211,0.009983,0.003837,54992
+ins_days_late_avg_all,Average instalment delay,384,13,0.006983,0.000236,54992
+app_annuity_to_income,Payment to income,376,17,0.006837,0.000309,54992
+app_family_status,Family status,227,0,0.004128,0.0,54992
+bur_closed_cnt,Repaid credits elsewhere,226,0,0.00411,0.0,54992
+cc_pay_to_min_avg_12m,Card payments versus minimum,154,0,0.0028,0.0,54992
+ins_unpaid_cnt_all,Unpaid instalments,113,3,0.002055,5.5e-05,54992
+cc_active_months_12m,Months with card spending,85,0,0.001546,0.0,54992
+pos_dpd_max_12m,"Longest delay, consumer loans, last year",83,3,0.001509,5.5e-05,54992
+cc_util_avg_12m,"Card use, average",65,0,0.001182,0.0,54992
+ins_days_late_max_all,Longest instalment delay,56,1,0.001018,1.8e-05,54992
+bur_active_credit_sum,Active credit elsewhere,53,2,0.000964,3.6e-05,54992
+ins_cnt_12m,"Instalments, last year",43,0,0.000782,0.0,54992
+ins_underpaid_share_all,Instalments underpaid,40,0,0.000727,0.0,54992
+app_income_amt,Income,26,0,0.000473,0.0,54992
+ins_cnt_all,Earlier instalments,14,0,0.000255,0.0,54992
+prv_refused_cnt_2y,"Refusals, last two years",8,0,0.000145,0.0,54992
+app_credit_to_income,Credit to income,7,0,0.000127,0.0,54992
+pos_dpd_months_all,"Late months, consumer loans",7,0,0.000127,0.0,54992
+pos_contract_cnt,Number of earlier consumer loans,5,0,9.1e-05,0.0,54992
+bb_dpd_months_12m,"Late months elsewhere, last year",5,0,9.1e-05,0.0,54992
+prv_app_cnt_2y,"Applications, last two years",3,0,5.5e-05,0.0,54992
+bur_annuity_known_sum,Payments reported elsewhere,3,0,5.5e-05,0.0,54992
+app_goods_price_amt,Price of goods,2,0,3.6e-05,0.0,54992
+prv_last_decision_days_ago,Days since last application,2,0,3.6e-05,0.0,54992
