@@ -1,7 +1,7 @@
 # Stage 6 design — the dashboard (Tableau Public)
 
-Choices made 2026-09-27 (decision 29). Stage 5 (Dataiku) waits for Dataiku's
-answer on the Free Edition registration; nothing here depends on it.
+Choices made 2026-09-27 (decision 29). The export is the last step of the
+pipeline (Stage 5, decision 31).
 
 ## In plain words
 

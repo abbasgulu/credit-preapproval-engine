@@ -10,7 +10,7 @@
 -- The group is computed from a hash of the client ID (ORA_HASH): the same
 -- client always lands in the same group, on any machine, with no random
 -- seed to remember (decision 17). Every tool reads the same view, so SQL,
--- Python, Dataiku and Tableau all use exactly the same split.
+-- Python and Tableau all use exactly the same split.
 -- =====================================================================
 
 WHENEVER SQLERROR EXIT FAILURE

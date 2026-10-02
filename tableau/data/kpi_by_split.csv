@@ -1,5 +1,5 @@
 split,split_label,split_order,clients,approved,declined,approval_rate,bad_rate_approved,bad_rate_declined,expected_bad_rate_approved,trouble_avoided,avg_limit,total_limit
 fit,Fit (model learned here),1,214860,140782,74078,0.655227,0.039977,0.157037,0.047459,0.673947,375562.78,52872479356.74
-valid,Valid (cut-off chosen here),2,46342,30152,16190,0.650641,0.047194,0.147869,0.047669,0.627194,374600.83,11294964209.24
+valid,Valid (cut-off chosen here),2,46342,30152,16190,0.650641,0.047194,0.147869,0.047669,0.627194,374600.83,11294964209.23
 holdout,"Holdout (final exam, report only)",3,46309,30361,15948,0.655618,0.047166,0.145159,0.047466,0.617828,374077.0,11357351700.56
 test,"Test (new applicants, outcome unknown)",4,48744,32082,16662,0.658173,,,0.046685,,397383.07,12748843501.96

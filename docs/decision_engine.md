@@ -15,7 +15,7 @@ avoided **61.8%** of all repayment trouble.
 
 | Run | Date | Model | PD cut-off | Rule-set fingerprint | Clients | Approved |
 |---|---|---|---:|---|---:|---:|
-| 2 | 2026-09-26 | lightgbm v1 | 14.50% | `A993F3AB58DBBDA2` | 356,255 | 233,377 |
+| 21 | 2026-10-02 | lightgbm v1 | 14.50% | `A993F3AB58DBBDA2` | 356,255 | 233,377 |
 
 Python recomputed every decision and limit from the same rules: all of them match the
 engine's (reconciliation, [improvement 10](before_after.md)).

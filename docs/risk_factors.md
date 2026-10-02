@@ -20,7 +20,7 @@ is improved by editing a row, not code. Only facts that *raised* the risk are na
 
 | Run | Date | Model | Clients declined for risk | Explained | Largest SHAP reconciliation gap |
 |---|---|---|---:|---:|---:|
-| 2 | 2026-09-26 | lightgbm v1 | 54,992 | 54,992 | 1.6e-14 |
+| 21 | 2026-10-02 | lightgbm v1 | 54,992 | 54,992 | 1.6e-14 |
 
 For every client the SHAP parts add up to the raw score stored in `model_scores`: the
 explanation comes from exactly the model that made the decision.

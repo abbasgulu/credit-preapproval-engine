@@ -21,7 +21,8 @@ __pycache__/
 venv/
 .ipynb_checkpoints/
 
-# Logs and temp files
+# Logs and temp files (pipeline logs go to logs/)
+logs/
 *.log
 *.tmp
 

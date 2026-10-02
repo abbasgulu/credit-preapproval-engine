@@ -49,6 +49,8 @@ an example. If a document uses a word you do not know, it should be here.
 | **Stored procedure** | A program saved inside the database and run there, next to the data | `p_run_decisions` makes all decisions |
 | **Temporary table** | A table whose rows only the current session sees and which empties itself at the end of the transaction — a scratch pad | `decision_work` |
 | **Transaction** | A group of changes that is saved all together or not at all | The engine writes all 356,255 decisions in one transaction: never half a run |
+| **Pipeline** | A chain of steps run in a fixed order, each checking its own result; the run stops at the first failure | `run_pipeline.py`: decisions → evaluation → explanations → dashboard files |
+| **Log file** | A file that keeps everything a run printed, to inspect it later | `logs\pipeline_20261002_161135.log` |
 | **Fingerprint (hash)** | A short code computed from a text or file; any change to the content gives a different code | Two runs with the same rule-set fingerprint used exactly the same rules |
 
 ## Decisions
