@@ -9,5 +9,6 @@ scikit-learn
 lightgbm
 shap
 matplotlib
+openpyxl
 seaborn
 jupyter
