@@ -35,6 +35,19 @@ code, silent row duplication and more). See [docs/before_after.md](docs/before_a
 | GitHub | Code, SQL, documentation | this repository |
 | Tableau Public | Dashboard (4 pages) | [Credit Pre-Approval Engine](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) |
 
+## Dashboard
+
+Four pages on [Tableau Public](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance); a **Group** selector switches every
+chart between the model's groups (holdout, the clients never used for any
+choice, is shown by default).
+
+| | |
+|---|---|
+| [![At a glance](docs/img/6_1_at_a_glance.png)](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) | [![Why clients are declined](docs/img/6_2_why_declined.png)](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) |
+| **At a glance** — approval, trouble avoided, the same result in every group | **Why declined** — main reasons, trouble per outcome, facts behind risk declines |
+| [![Risk and limits](docs/img/6_3_risk_and_limits.png)](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) | [![Debt rule what-if](docs/img/6_4_debt_rule.png)](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) |
+| **Risk and limits** — approvals stop at the cut-off, the limit grid | **Debt rule what-if** — the rule protects affordability, not risk |
+
 ## Tech stack
 
 Oracle SQL · Python (pandas, scikit-learn, LightGBM, SHAP) · Tableau

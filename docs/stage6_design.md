@@ -46,6 +46,9 @@ Column meanings: [tableau/README.md](../tableau/README.md).
 
 ## 3. The pages (as built)
 
+Screenshots: [page 1](img/6_1_at_a_glance.png), [page 2](img/6_2_why_declined.png),
+[page 3](img/6_3_risk_and_limits.png), [page 4](img/6_4_debt_rule.png).
+
 A **Group** selector (fit / valid / holdout / test, default **holdout** — the
 clients never used for any choice) sits at the top right of every page and
 changes every chart that has a group at once. Titles state the finding in a few
