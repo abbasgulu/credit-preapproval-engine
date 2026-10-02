@@ -22,6 +22,8 @@ Design of the pages: [docs/stage6_design.md](../docs/stage6_design.md).
 
 ## The workbook
 
+Live version: [Credit Pre-Approval Engine on Tableau Public](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance).
+
 `credit_preapproval.twb` holds the four dashboard pages and reads
 `data/dashboard_data.xlsx`. Open it in Tableau Public (free). The workbook
 remembers where the Excel file was on the computer it was built on; on another

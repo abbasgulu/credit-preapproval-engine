@@ -100,7 +100,7 @@ fingerprint, "public Kaggle data, all rules illustrative".
 | 6a | `export_tableau.py`: the summary files, reconciled — done |
 | 6b | Install Tableau Public, open the files, check the totals against the run — done |
 | 6c | Build pages 1–4 — done 2026-10-02 |
-| 6d | Publish to Tableau Public; save the workbook (`tableau/credit_preapproval.twbx`) and screenshots in the repository; link from the README |
+| 6d | Publish to Tableau Public — done 2026-10-02: [Credit Pre-Approval Engine](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance); the workbook is in the repository as `tableau/credit_preapproval.twb` |
 
 ## 6. Changes made while building
 
