@@ -9,6 +9,9 @@ writes anything). No file contains a client ID or any single client's data;
 where a row describes fewer than 10 clients, its count is kept but its rates
 are hidden (`suppressed = 1`).
 
+Tableau opens **`data/dashboard_data.xlsx`**: the same ten tables, one sheet
+each. The CSV files hold identical content and are there to be read on GitHub.
+
 Rebuild the files (from the repository root):
 
 ```bat
@@ -16,6 +19,15 @@ python python\scripts\export_tableau.py
 ```
 
 Design of the pages: [docs/stage6_design.md](../docs/stage6_design.md).
+
+## The workbook
+
+`credit_preapproval.twb` holds the four dashboard pages and reads
+`data/dashboard_data.xlsx`. Open it in Tableau Public (free). The workbook
+remembers where the Excel file was on the computer it was built on; on another
+computer Tableau asks for the file once — point it to `tableau/data/dashboard_data.xlsx`.
+After a new run of the engine: run the export, open the workbook and choose
+**Data → (each data source) → Refresh**.
 
 ## Words used in the columns
 
@@ -34,8 +46,8 @@ Design of the pages: [docs/stage6_design.md](../docs/stage6_design.md).
 |---|---|---|
 | `run_info.csv` | the run | `run_id`, `run_date`, `model`, `pd_cutoff`, `target_bad_rate`, `debt_rule_multiple`, `min_limit`, `max_limit`, `ruleset_hash`, `clients`, `approved` |
 | `kpi_by_split.csv` | group | `clients`, `approved`, `declined`, `approval_rate`, `bad_rate_approved`, `bad_rate_declined`, `expected_bad_rate_approved`, `trouble_avoided`, `avg_limit`, `total_limit` |
-| `outcomes.csv` | group × outcome | `outcome` (`APPROVED` or the main reason code), `outcome_label`, `outcome_category`, `outcome_order`, `clients`, `share_of_split`, `default_rate`, `avg_pd`, `avg_limit` — from the Oracle view `v_decision_summary` |
-| `reasons_all.csv` | group × reason | `reason_code`, `description`, `category`, `clients` (a client can have several reasons), `share_of_split` |
+| `outcomes.csv` | group × outcome | `outcome` (`APPROVED` or the main reason code), `outcome_label` (short name), `outcome_description` (full sentence), `outcome_category`, `outcome_order`, `clients`, `share_of_split`, `default_rate`, `avg_pd`, `avg_limit` — from the Oracle view `v_decision_summary` |
+| `reasons_all.csv` | group × reason | `reason_code`, `description` (short name), `full_description` (full sentence), `category`, `clients` (a client can have several reasons), `share_of_split` |
 | `risk_facts.csv` | fact | `short_label`, `clients_in_top3`, `clients_first`, `share_in_top3`, `share_first`, `explained_clients` |
 | `pd_distribution.csv` | group × PD band of 1 point (40% and above in one band) | `pd_from`, `pd_band`, `clients`, `approved`, `approval_rate`, `default_rate`, `avg_pd` |
 | `grid_cells.csv` | cell of the limit grid | `pd_band`, `income_band`, `income_multiple`, `clients`, `approved`, `approval_rate`, `avg_limit`, `default_rate` |

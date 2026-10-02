@@ -25,6 +25,8 @@ Output (tableau/data/, all from the same run of the engine):
   limit_distribution.csv  approved limits in bands of 100,000
   limit_basis.csv       which cap set the approved limit
   debt_rule.csv         the debt rule at other values (what-if page)
+  dashboard_data.xlsx   the same ten tables, one sheet each — the file Tableau
+                        opens (Excel has no separator to guess, unlike CSV)
 
 Run from the repository root, after sql\\run_decisions.sql and
 python\\scripts\\explain_decisions.py:
@@ -48,9 +50,16 @@ MIN_CELL = 10                      # smallest group whose rates are published
 SPLITS = ["fit", "valid", "holdout", "test"]
 SPLIT_LABEL = {"fit": "Fit (model learned here)", "valid": "Valid (cut-off chosen here)",
                "holdout": "Holdout (final exam, report only)", "test": "Test (new applicants, outcome unknown)"}
-PD_BIN = 0.01                      # PD bands of 1 percentage point ...
+# short names for the charts, where the full sentence does not fit next to a bar;
+# the full sentence stays in the files too (outcome_description, full_description)
+REASON_SHORT = {"EXCL_WRITTEN_OFF": "Written off elsewhere", "AGE_UNDER_MIN": "Below minimum age",
+                "CURRENT_ARREARS": "Behind on payments now", "AGE_AT_MATURITY": "Too old at end of term",
+                "PD_ABOVE_CUTOFF": "Risk above cut-off", "DEBT_TOO_HIGH": "Debt too high",
+                "LIMIT_BELOW_MIN": "Limit below minimum"}
+PD_BIN = 0.01                    # PD bands of 1 percentage point ...
 PD_TOP = 0.40                      # ... up to 40%, then one band "40% and above"
 LIMIT_BIN = 100_000
+XLSX_NAME = "dashboard_data.xlsx"  # what Tableau reads; the CSVs are the same tables, readable on GitHub
 BASIS_LABEL = {"GRID": "Limit grid (income x multiple)", "DEBT": "Debt rule (room left)",
                "MAX_LIMIT": "Maximum limit"}
 
@@ -119,12 +128,19 @@ def check(name: str, ok: bool, detail: str, problems: list) -> None:
 
 
 def main() -> None:
+    try:
+        import openpyxl  # noqa: F401  (writes the Excel file)
+    except ImportError:
+        sys.exit("Package openpyxl is missing: run  python -m pip install openpyxl  and try again.")
     run = read_sql(RUN_SQL)
     if run.empty:
         sys.exit("No successful run of the decision engine yet: run sql\\run_decisions.sql first.")
     run = run.iloc[0]
     rules = read_sql(RULES_SQL).set_index("rule_code").rule_value.to_dict()
     reasons = read_sql(REASONS_SQL).set_index("reason_code")
+    missing = sorted(set(reasons.index) - set(REASON_SHORT))
+    if missing:
+        sys.exit(f"No short name for reason code(s) {', '.join(missing)}: add them to REASON_SHORT first.")
     df = read_sql(DECISIONS_SQL)
     print(f"Run {int(run.run_id)} of {run.run_date}: {len(df):,} decisions read\n")
     files: dict[str, pd.DataFrame] = {}
@@ -154,18 +170,21 @@ def main() -> None:
 
     # ---- outcomes (straight from the reconciled view v_decision_summary) ------
     out = read_sql(OUTCOMES_SQL)
-    out["outcome_label"] = [("Pre-approved" if o == "APPROVED" else reasons.description.get(o, o))
-                            for o in out.outcome]
+    out["outcome_label"] = ["Pre-approved" if o == "APPROVED" else REASON_SHORT[o] for o in out.outcome]
     out["split_order"] = out.split.map({s: i + 1 for i, s in enumerate(SPLITS)})
     out["share_of_split"] = out.clients / out.split.map(kpi.set_index("split").clients)
+    # new columns go last: Tableau keeps reading the existing columns where they were
+    out["outcome_description"] = ["Pre-approved" if o == "APPROVED" else reasons.description[o]
+                                  for o in out.outcome]
     files["outcomes"] = out.sort_values(["split_order", "outcome_order"])
 
     # ---- reasons_all ------------------------------------------------------------
     ra = read_sql(REASONS_ALL_SQL)
-    ra["description"] = ra.reason_code.map(reasons.description)
+    ra["description"] = ra.reason_code.map(REASON_SHORT)          # short, so it fits next to a bar
     ra["category"] = ra.reason_code.map(reasons.category)
     ra["reason_order"] = ra.reason_code.map(reasons.priority)
     ra["share_of_split"] = ra.clients / ra.split.map(kpi.set_index("split").clients)
+    ra["full_description"] = ra.reason_code.map(reasons.description)   # new column goes last
     files["reasons_all"] = ra.sort_values(["split", "reason_order"])
 
     # ---- risk_facts ---------------------------------------------------------------
@@ -264,6 +283,7 @@ def main() -> None:
 
     # ---- write ---------------------------------------------------------------------------------
     OUT.mkdir(parents=True, exist_ok=True)
+    clean: dict[str, pd.DataFrame] = {}
     for name, f in files.items():
         f = f.copy()
         for col in f.select_dtypes("float").columns:     # rates to 6 decimals, amounts to 2, counts as whole numbers
@@ -274,8 +294,13 @@ def main() -> None:
             else:
                 f[col] = f[col].round(6 if is_rate else 2)
         f.to_csv(OUT / f"{name}.csv", index=False, encoding="utf-8")
+        clean[name] = f
+    # the same tables in ONE Excel file, one sheet each: Tableau reads it without guessing separators
+    with pd.ExcelWriter(OUT / XLSX_NAME, engine="openpyxl") as xl:
+        for name, f in clean.items():
+            f.to_excel(xl, sheet_name=name, index=False)
     hidden = sum(int(f["suppressed"].sum()) for f in files.values() if "suppressed" in f.columns)
-    print(f"\n{len(files)} files written to tableau/data/ "
+    print(f"\n{len(files)} CSV files and {XLSX_NAME} ({len(files)} sheets) written to tableau/data/ "
           f"({hidden} small rows with rates hidden, fewer than {MIN_CELL} clients)")
     for name, f in files.items():
         print(f"  {name + '.csv':<24} {len(f):>4} rows")

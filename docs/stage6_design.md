@@ -15,8 +15,11 @@ limits relate, and what a looser or stricter debt rule would change.
 - **Tableau Public** (free) on the personal computer. It reads files, not
   Oracle, and whatever is published there is visible to everyone.
 - So Tableau gets **only summary files**: counts, rates and averages per group,
-  written by `python/scripts/export_tableau.py` into `tableau/data/`. No file
-  holds a client ID or a single client's data.
+  written by `python/scripts/export_tableau.py` into `tableau/data/`: CSV
+  files to read on GitHub, and the same tables as one Excel file
+  (`dashboard_data.xlsx`, a sheet per table) that Tableau opens — Tableau
+  misread the CSV separators when labels contained commas. No file holds a
+  client ID or a single client's data.
 - **Small groups:** in the distribution files, a row about fewer than 10
   clients keeps its count but its rates are hidden (`suppressed = 1`).
 - **Reconciliation:** the export adds every file back up to the engine's run
@@ -41,37 +44,42 @@ limits relate, and what a looser or stricter debt rule would change.
 
 Column meanings: [tableau/README.md](../tableau/README.md).
 
-## 3. The pages
+## 3. The pages (as built)
 
-A **group filter** (valid / holdout / test; fit available) sits at the top of
-pages 1–3, default **holdout** — the clients never used for any choice.
+A **Group** selector (fit / valid / holdout / test, default **holdout** — the
+clients never used for any choice) sits at the top right of every page and
+changes every chart that has a group at once. Titles state the finding in a few
+words; numbers are written on the bars, so most axes are hidden.
 
 **Page 1 — At a glance**
-- Tiles: approved %, repayment trouble among approved and among declined,
-  share of all trouble avoided, average limit (test: expected trouble = average PD)
-- Bar: approval rate per group — the same rules give the same result everywhere
-- Footer: run date, model, cut-off, rule-set fingerprint; "all numbers are illustrative"
+- Tiles: pre-approved, trouble among approved and among declined, share of
+  trouble avoided, average limit
+- Bar: pre-approved per group — the same rules give the same result everywhere
 
-**Page 2 — Why declined**
-- Bar: clients per main reason, coloured by category (exclusion, policy, risk, affordability)
-- Bar: repayment trouble per outcome, with the group's average as a line
-- Bar: every reason that applied (a client can have several)
-- Bar: the 10 facts most often behind a risk decline (share of risk declines)
+**Page 2 — Why clients are declined**
+- Main reason per declined client (colour = category)
+- Repayment trouble per outcome, with the group average as a dashed line:
+  risk declines have about 5× the trouble of approved clients, debt-rule declines
+  about the same as approved
+- Every reason that applied (a client can have several)
+- The 10 facts most often among the top 3 reasons of a risk decline (all groups)
 
 **Page 3 — Risk and limits**
-- Histogram: clients per PD band, approved vs declined, cut-off as a line
-- Line (separate chart, same PD axis): repayment trouble per PD band
-- Heat map: the limit grid — PD band × income band, cell text = income multiple,
-  colour = approval rate
-- Histogram: approved limits; bar: which cap set the limit
+- Pre-approved per 1-point PD band: approvals stop at the cut-off
+- Repayment trouble per PD band: trouble rises with the predicted risk
+- The limit grid as a heat map: income multiple per PD band × income band,
+  darker = more pre-approved (all clients)
+- Approved limits in bands of 100,000
 
 **Page 4 — What if the debt rule were different**
-- A selector (parameter) for the debt rule: 3, 4, 5, 6, 8, 10 × income or none
-- Tiles for the chosen value next to the rule in force: approved %, trouble
-  among approved, average limit, clients declined by the debt rule
-- Chart: approved % against trouble among approved for every value, the chosen
-  one highlighted, the 5% target as a line
-- Note: the rule stays at 5 × income (decision 27) and why
+- For 3, 4, 5, 6, 8, 10 × income and no rule: pre-approved, trouble among
+  approved, clients the rule declines; the rule in force (5 × income) in blue
+- Holdout: without the rule approvals rise from 65.6% to 80.2% while trouble
+  among approved moves only from 4.72% to 4.78% — the rule protects
+  affordability, not risk (decision 27)
+
+Every page ends with the run footer: run date, model, cut-off, rule-set
+fingerprint, "public Kaggle data, all rules illustrative".
 
 ## 4. Look
 
@@ -89,7 +97,23 @@ pages 1–3, default **holdout** — the clients never used for any choice.
 
 | Step | What |
 |---|---|
-| 6a | `export_tableau.py`: the summary files, reconciled |
-| 6b | Install Tableau Public, open the files, check the totals against the run |
-| 6c | Build pages 1–4 |
+| 6a | `export_tableau.py`: the summary files, reconciled — done |
+| 6b | Install Tableau Public, open the files, check the totals against the run — done |
+| 6c | Build pages 1–4 — done 2026-10-02 |
 | 6d | Publish to Tableau Public; save the workbook (`tableau/credit_preapproval.twbx`) and screenshots in the repository; link from the README |
+
+## 6. Changes made while building
+
+- **One Group selector for all pages** (a Tableau parameter) instead of a
+  filter per chart: each data source has a field `In chosen group`, so one
+  choice changes every page.
+- **Short reason names** (`Debt too high`, `Risk above cut-off`, …) written by
+  `export_tableau.py`; the full sentence stays in the files
+  (`outcome_description`, `full_description`). New columns are added at the
+  end of a table, because Tableau reads Excel columns by position.
+- **Fewer words on screen:** one-line titles that state the finding, one
+  short subtitle, numbers on the bars instead of axes.
+- `limit_basis` (which cap set the limit) stays in the data files but has no
+  chart: the limit histogram and grid already tell that story.
+- Page 4 shows every debt-rule value side by side (three bar charts) instead of
+  a selector with tiles: all values can be compared at a glance.
