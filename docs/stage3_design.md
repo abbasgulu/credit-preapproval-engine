@@ -153,9 +153,8 @@ the score.
 | Calibration table + function | `sql/04_reference/01_ref_calibration.sql` |
 | Score table | `sql/01_ddl/04_model_scores.sql` |
 | Reusable Python | `python/hcr/db.py` (connection), `woe.py`, `metrics.py` |
-| One command that trains everything | `python/scripts/train_models.py` |
-| The story with charts | `notebooks/03_model.ipynb` (also for Kaggle) |
-| Model report (plain words + numbers) | `docs/model_report.md` |
+| Training scripts | `python/scripts/train_scorecard.py`, `train_lightgbm.py`, `compare_holdout.py`, `calibrate_and_score.py` |
+| Model reports (plain words + numbers, with charts) | [scorecard.md](scorecard.md), [lightgbm.md](lightgbm.md), [model_comparison.md](model_comparison.md), [calibration.md](calibration.md) |
 
 ## 7. Order of work
 

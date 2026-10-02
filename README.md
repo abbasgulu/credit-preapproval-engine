@@ -22,7 +22,7 @@ Every step is checked automatically and every choice is written down, so
 anyone can follow why the result is what it is. Unfamiliar words are
 explained in the [glossary](docs/glossary.md).
 
-> **Status:** 🚧 In progress — Stages 1–2 complete: 58.5M raw rows loaded; 88-column feature table (one row per client) built and verified by 36 automated data-quality checks. Stage 3 complete: LightGBM chosen on untouched clients (Gini 0.572), calibrated, and every client's PD in Oracle. Stage 4 complete: decision engine — every client approved with a limit or declined with reasons, all rules read from tables, 12 automated checks on every run ([results](docs/decision_engine.md)); every risk decline explained by the three facts that raised the risk most, in plain words ([examples](docs/risk_factors.md)). Stage 6: four-page Tableau dashboard built from reconciled summary files ([design](docs/stage6_design.md)); published on [Tableau Public](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance). Stage 5 complete: the whole pipeline runs with one command, stops at the first failed check and logs every step ([details](docs/stage5_design.md)).
+> **Status:** ✅ Complete — 58.5M raw rows loaded into Oracle and summarised into an 88-column feature table, checked by 36 automated data-quality checks; LightGBM chosen on untouched clients (Gini 0.572) and calibrated; a decision engine that approves with a limit or declines with reasons, every rule read from tables and 12 checks on every run ([results](docs/decision_engine.md)); every risk decline explained by the three facts that raised the risk most ([examples](docs/risk_factors.md)); the whole pipeline runs with one command ([Stage 5](docs/stage5_design.md)); a four-page dashboard on [Tableau Public](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance).
 
 The project also addresses ten engineering problems that are common in legacy
 risk pipelines (hard-coded lists, duplicated formulas, rules scattered through
@@ -34,7 +34,6 @@ code, silent row duplication and more). See [docs/before_after.md](docs/before_a
 |---|---|---|
 | GitHub | Code, SQL, documentation | this repository |
 | Tableau Public | Dashboard (4 pages) | [Credit Pre-Approval Engine](https://public.tableau.com/views/CreditPre-ApprovalEngine/1-Ataglance) |
-| Kaggle | Modelling notebook | _coming soon_ |
 
 ## Tech stack
 
@@ -52,15 +51,13 @@ config/      connection settings template (.env.example)
 data/        raw Kaggle files and exports (not committed)
 sql/         Oracle scripts, numbered in execution order
 python/      reusable modules (hcr/) and runnable scripts
-notebooks/   EDA, modelling, calibration and limits
+models/      trained models and the one-time holdout result
 tableau/     workbook and screenshots
 logs/        one log file per pipeline run (not committed)
 docs/        glossary, design notes, data profiling, data dictionary, decision log
 ```
 
 ## How to run
-
-_Step-by-step instructions will be added as each stage is completed._
 
 All commands are run from the repository root in Windows `cmd`.
 

@@ -1,14 +1,11 @@
-# Python dependencies.
-# Exact versions will be pinned (pip freeze) once the environment is final.
-pandas
-numpy
-oracledb
-python-dotenv
-keyring
-scikit-learn
-lightgbm
-shap
-matplotlib
-openpyxl
-seaborn
-jupyter
+# Python dependencies, pinned to the versions the project was built and run with.
+# Install:  python -m pip install -r requirements.txt
+pandas==3.0.3
+numpy==2.5.1
+oracledb==26.0.1
+python-dotenv==1.2.3
+keyring==25.7.0
+scikit-learn==1.9.0
+lightgbm==4.7.0
+matplotlib==3.11.1
+openpyxl==3.1.5
